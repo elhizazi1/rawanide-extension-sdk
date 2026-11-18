@@ -1,0 +1,28 @@
+{
+  "id": "local.sdk-hello",
+  "name": "Hello RawanIDE",
+  "version": "0.3.0",
+  "publisher": "RawanIDE SDK Example",
+  "description": "A test command that displays a toast when invoked from Extension Commands.",
+  "apiVersion": "1.0",
+  "runtime": "hosted-js",
+  "category": "Tools",
+  "entrypoint": "src/main.js",
+  "activationEvents": [
+    "onCommand"
+  ],
+  "permissions": [
+    "UI_ACCESS"
+  ],
+  "commands": [
+    {
+      "id": "local.sdk-hello.sayHello",
+      "title": "Hello RawanIDE: Say Hello",
+      "runtime": true,
+      "description": "Show a welcome message",
+      "group": "Hello RawanIDE"
+    }
+  ],
+  "icon": "assets/icon.svg",
+  "license": "MIT"
+}

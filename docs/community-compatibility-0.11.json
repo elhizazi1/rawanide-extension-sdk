@@ -1,0 +1,160 @@
+{
+  "method": "read-only archive inventory; no scripts executed; does not prove runtime compatibility",
+  "sampleCount": 22,
+  "samples": [
+    {
+      "archive": "me.elhizazi.rawanide.code-screenshot-1.0.2.r1",
+      "runtime": "hosted-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 2
+    },
+    {
+      "archive": "me.elhizazi.rawanide.color-studio-1.0.1.r1",
+      "runtime": "declarative",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 0
+    },
+    {
+      "archive": "me.elhizazi.rawanide.dev-toolkit-1.2.2.r1",
+      "runtime": "hosted-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 19
+    },
+    {
+      "archive": "me.elhizazi.rawanide.dev-toolkit-files-1.1.0.r1",
+      "runtime": "hosted-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 0
+    },
+    {
+      "archive": "me.elhizazi.rawanide.developerfonts-1.0.0.r1",
+      "runtime": "declarative",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 0
+    },
+    {
+      "archive": "me.elhizazi.rawanide.editor-lock-1.0.3.r1",
+      "runtime": "hosted-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 3
+    },
+    {
+      "archive": "me.elhizazi.rawanide.editor-zoom-1.0.2.r1",
+      "runtime": "hosted-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 8
+    },
+    {
+      "archive": "me.elhizazi.rawanide.eruda-1.0.2.r1",
+      "runtime": "preview-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 0
+    },
+    {
+      "archive": "me.elhizazi.rawanide.extension-api-explorer-1.2.0.r1",
+      "runtime": "hosted-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 5
+    },
+    {
+      "archive": "me.elhizazi.rawanide.file-tools-1.0.1.r1",
+      "runtime": "hosted-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 0
+    },
+    {
+      "archive": "me.elhizazi.rawanide.html5-boilerplate-1.1.0.r1",
+      "runtime": "declarative",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 1
+    },
+    {
+      "archive": "me.elhizazi.rawanide.iconpack.developer-studio-1.0.1.r1",
+      "runtime": "declarative",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 0
+    },
+    {
+      "archive": "me.elhizazi.rawanide.iconpack.visual-style-preview-1.0.2.r1",
+      "runtime": "declarative",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 0
+    },
+    {
+      "archive": "me.elhizazi.rawanide.lorem-ipsum-1.0.1.r1",
+      "runtime": "declarative",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 3
+    },
+    {
+      "archive": "me.elhizazi.rawanide.markdown-viewer-1.1.0.r1",
+      "runtime": "preview-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 0
+    },
+    {
+      "archive": "me.elhizazi.rawanide.material-workspace-icons-1.0.1.r1",
+      "runtime": "declarative",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 0
+    },
+    {
+      "archive": "me.elhizazi.rawanide.path-autocomplete-1.1.0.r1",
+      "runtime": "hosted-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 1
+    },
+    {
+      "archive": "me.elhizazi.rawanide.project-health-2.0.1.r1",
+      "runtime": "hosted-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 5
+    },
+    {
+      "archive": "me.elhizazi.rawanide.project-inspector-1.0.3.r1",
+      "runtime": "hosted-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 2
+    },
+    {
+      "archive": "me.elhizazi.rawanide.terminal-runner-1.1.1.r1",
+      "runtime": "hosted-js",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 8
+    },
+    {
+      "archive": "me.elhizazi.rawanide.terminal-themes-1.0.1.r1",
+      "runtime": "declarative",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 0
+    },
+    {
+      "archive": "me.elhizazi.rawanide.theme.github-1.1.1.r1",
+      "runtime": "declarative",
+      "manifestPresent": true,
+      "entrypointPresent": true,
+      "commandCount": 0
+    }
+  ]
+}

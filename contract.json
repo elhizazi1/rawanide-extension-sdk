@@ -1,0 +1,54 @@
+{
+  "apiVersion": "1.0",
+  "formatVersion": 1,
+  "runtimes": [
+    "declarative",
+    "preview-js",
+    "hosted-js"
+  ],
+  "permissions": [
+    "FILE_READ",
+    "FILE_WRITE",
+    "EDITOR_READ",
+    "EDITOR_WRITE",
+    "UI_ACCESS",
+    "DIAGNOSTICS",
+    "PROJECT_ACCESS",
+    "NETWORK_ACCESS",
+    "TERMINAL_ACCESS",
+    "PROCESS_EXECUTION",
+    "MEDIA_EXPORT",
+    "SHARE",
+    "DEVICE_FILES_READ",
+    "DEVICE_FILES_WRITE"
+  ],
+  "supportedPermissions": [
+    "FILE_READ",
+    "FILE_WRITE",
+    "EDITOR_READ",
+    "EDITOR_WRITE",
+    "UI_ACCESS",
+    "DIAGNOSTICS",
+    "NETWORK_ACCESS",
+    "TERMINAL_ACCESS",
+    "MEDIA_EXPORT",
+    "SHARE",
+    "DEVICE_FILES_READ",
+    "DEVICE_FILES_WRITE"
+  ],
+  "officialOnlyPermissions": [
+    "PROJECT_ACCESS"
+  ],
+  "reservedPermissions": [
+    "PROCESS_EXECUTION"
+  ],
+  "maxPackageBytes": 104857600,
+  "maxEntries": 2000,
+  "maxManifestBytes": 524288,
+  "maxUncompressedBytes": 314572800,
+  "sourceFiles": [
+    "ExtensionContract.kt",
+    "ExtensionPackageValidator.kt",
+    "IdeModels.kt"
+  ]
+}

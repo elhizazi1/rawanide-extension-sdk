@@ -1,0 +1,10 @@
+{
+  "id": "com.example.theme",
+  "name": "Example Declarative Extension",
+  "version": "0.1.0",
+  "apiVersion": "1.0",
+  "runtime": "declarative",
+  "permissions": [],
+  "icon": "assets/icon.svg",
+  "license": "MIT"
+}

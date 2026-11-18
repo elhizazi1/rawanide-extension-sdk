@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {execFileSync,spawnSync} from 'node:child_process';
+import {readFileSync,mkdtempSync,cpSync,writeFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..');
+const cli=path.join(root,'bin/rawanide.mjs');
+const template=path.join(root,'templates/hosted-js-selection-panel');
+test('selection context template validates',()=>assert.match(execFileSync(process.execPath,[cli,'validate',template],{encoding:'utf8'}),/PASS/));
+test('selection context action references declared hidden runtime command',()=>{const m=JSON.parse(readFileSync(path.join(template,'manifest.json')));assert.equal(m.commands[0].hidden,true);assert.equal(m.contextActions[0].commandId,m.commands[0].id);});
+test('selection example escapes HTML and never writes or calls network',()=>{const js=readFileSync(path.join(template,'src/extension.js'),'utf8');assert.match(js,/escapeHtml/);assert.match(js,/selection\.text/);assert.doesNotMatch(js,/applyEdits\(|network\.fetch\(/);});
+test('domain allowlist without network permission is rejected',()=>{const p=mkdtempSync(path.join(tmpdir(),'sdk-net-'));cpSync(template,p,{recursive:true});const f=path.join(p,'manifest.json');const m=JSON.parse(readFileSync(f));m.allowedDomains=['translate.googleapis.com'];writeFileSync(f,JSON.stringify(m));const r=spawnSync(process.execPath,[cli,'validate',p],{encoding:'utf8'});assert.notEqual(r.status,0);assert.match(r.stderr,/requires NETWORK_ACCESS/);});
+test('missing context icon is rejected',()=>{const p=mkdtempSync(path.join(tmpdir(),'sdk-icon-'));cpSync(template,p,{recursive:true});const f=path.join(p,'manifest.json');const m=JSON.parse(readFileSync(f));m.contextActions[0].icon='assets/missing.svg';writeFileSync(f,JSON.stringify(m));const r=spawnSync(process.execPath,[cli,'validate',p],{encoding:'utf8'});assert.notEqual(r.status,0);assert.match(r.stderr,/icon not found/);});

@@ -1,0 +1,15 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync,cpSync,mkdtempSync,writeFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import path from 'node:path';
+import {execFileSync,spawnSync} from 'node:child_process';
+const root=path.resolve(import.meta.dirname,'..');
+const cli=path.join(root,'bin/rawanide.mjs');
+const template=path.join(root,'templates/hosted-js-safe-edit');
+const source=readFileSync(path.join(template,'src/extension.js'),'utf8');
+test('safe edit template validates',()=>assert.match(execFileSync(process.execPath,[cli,'validate',template],{encoding:'utf8'}),/PASS/));
+test('edit permissions and hidden context command are declared',()=>{const m=JSON.parse(readFileSync(path.join(template,'manifest.json')));assert.ok(m.permissions.includes('EDITOR_WRITE'));assert.equal(m.contextActions[0].commandId,m.commands[0].id);assert.equal(m.commands[0].hidden,true);});
+test('edit requires explicit UI action, expected text and file path',()=>{for(const token of ['Confirm replacement','RawanIDEPanel.postMessage','rawanide.ui.onMessage','expected:request.original','filePath:request.filePath','result.ok','busy = true','pending = null'])assert.ok(source.includes(token),token);});
+test('no network or automatic edit on open',()=>{assert.doesNotMatch(source,/network\.fetch|fetch\(/);assert.match(source,/message.type !== 'apply'/);});
+test('missing write permission is rejected by sample contract test',()=>{const m=JSON.parse(readFileSync(path.join(template,'manifest.json')));assert.ok(m.permissions.includes('EDITOR_WRITE'));m.permissions=m.permissions.filter(p=>p!=='EDITOR_WRITE');assert.ok(!m.permissions.includes('EDITOR_WRITE'));});

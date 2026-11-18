@@ -1,0 +1,43 @@
+{
+  "id": "local.sdk-selection-panel",
+  "name": "SDK Selection Panel Example",
+  "version": "0.5.0",
+  "publisher": "RawanIDE SDK Example",
+  "description": "Offline context action and HTML panel example for selected editor text",
+  "apiVersion": "1.0",
+  "runtime": "hosted-js",
+  "entrypoint": "src/extension.js",
+  "category": "Tools",
+  "activationEvents": [
+    "onStartup"
+  ],
+  "permissions": [
+    "EDITOR_READ",
+    "UI_ACCESS"
+  ],
+  "commands": [
+    {
+      "id": "local.sdk-selection-panel.open",
+      "title": "SDK Selection: Inspect",
+      "runtime": true,
+      "hidden": true,
+      "languages": [
+        "*"
+      ]
+    }
+  ],
+  "contextActions": [
+    {
+      "id": "local.sdk-selection-panel.action",
+      "title": "Inspect selection",
+      "languages": [
+        "*"
+      ],
+      "commandId": "local.sdk-selection-panel.open",
+      "priority": 80,
+      "icon": "assets/context-action.svg"
+    }
+  ],
+  "icon": "assets/icon.svg",
+  "license": "MIT"
+}

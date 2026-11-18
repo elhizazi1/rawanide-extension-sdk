@@ -1,0 +1,49 @@
+{
+  "name": "@elhizazi1/extension-sdk",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Official RawanIDE Extension SDK CLI for building and validating .r1 extensions",
+  "type": "module",
+  "bin": {
+    "rawanide-sdk": "./bin/rawanide-sdk.mjs",
+    "rawanide": "./bin/rawanide.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check:package": "npm pack --dry-run --json",
+    "check:types": "node --test tests/types.test.mjs",
+    "check:release": "node bin/rawanide.mjs release-check",
+    "check:types:compile": "tsc --noEmit --strict --skipLibCheck --target ES2020 tests/typing-smoke.ts",
+    "check:archives": "node --test tests/archive-integration.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "files": [
+    "bin/",
+    "contract.json",
+    "templates/",
+    "types/",
+    "docs/",
+    "README.md",
+    "LICENSE"
+  ],
+  "types": "./types/rawanide.d.ts",
+  "exports": {
+    "./types": "./types/rawanide.d.ts",
+    "./contract": "./contract.json"
+  },
+  "homepage": "https://github.com/elhizazi1/rawanide-extension-sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elhizazi1/rawanide-extension-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elhizazi1/rawanide-extension-sdk/issues"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  }
+}

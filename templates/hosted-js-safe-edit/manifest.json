@@ -1,0 +1,44 @@
+{
+  "id": "local.sdk-safe-edit",
+  "name": "SDK Safe Edit Example",
+  "version": "0.6.0",
+  "publisher": "RawanIDE SDK Example",
+  "description": "Offline selection replacement with explicit confirmation and expected-text guard",
+  "apiVersion": "1.0",
+  "runtime": "hosted-js",
+  "entrypoint": "src/extension.js",
+  "category": "Tools",
+  "activationEvents": [
+    "onStartup"
+  ],
+  "permissions": [
+    "EDITOR_READ",
+    "EDITOR_WRITE",
+    "UI_ACCESS"
+  ],
+  "commands": [
+    {
+      "id": "local.sdk-safe-edit.open",
+      "title": "SDK Safe Edit: Open",
+      "runtime": true,
+      "hidden": true,
+      "languages": [
+        "*"
+      ]
+    }
+  ],
+  "contextActions": [
+    {
+      "id": "local.sdk-safe-edit.action",
+      "title": "Preview safe replacement",
+      "languages": [
+        "*"
+      ],
+      "commandId": "local.sdk-safe-edit.open",
+      "priority": 80,
+      "icon": "assets/context-action.svg"
+    }
+  ],
+  "icon": "assets/icon.svg",
+  "license": "MIT"
+}

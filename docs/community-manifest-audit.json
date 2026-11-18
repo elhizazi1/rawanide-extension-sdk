@@ -1,0 +1,575 @@
+{
+  "description": "Read-only manifest field inventory extracted from user-supplied community archives; no extension code included",
+  "sampleCount": 22,
+  "samples": [
+    {
+      "archive": "me.elhizazi.rawanide.code-screenshot-1.0.2.r1",
+      "runtime": "hosted-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "commands",
+        "contextActions",
+        "description",
+        "entrypoint",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 2,
+      "contextActionCount": 1,
+      "permissions": [
+        "EDITOR_READ",
+        "MEDIA_EXPORT",
+        "SHARE",
+        "UI_ACCESS"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.color-studio-1.0.1.r1",
+      "runtime": "declarative",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "contextActions",
+        "description",
+        "icon",
+        "id",
+        "license",
+        "localization",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 0,
+      "contextActionCount": 1,
+      "permissions": [],
+      "hasEntrypoint": false
+    },
+    {
+      "archive": "me.elhizazi.rawanide.dev-toolkit-1.2.2.r1",
+      "runtime": "hosted-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "commands",
+        "contextActions",
+        "description",
+        "entrypoint",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 19,
+      "contextActionCount": 1,
+      "permissions": [
+        "EDITOR_READ",
+        "EDITOR_WRITE",
+        "UI_ACCESS"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.dev-toolkit-files-1.1.0.r1",
+      "runtime": "hosted-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "description",
+        "entrypoint",
+        "fileManager",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 0,
+      "contextActionCount": 0,
+      "permissions": [
+        "DEVICE_FILES_READ",
+        "DEVICE_FILES_WRITE"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.developerfonts-1.0.0.r1",
+      "runtime": "declarative",
+      "manifestKeys": [
+        "apiVersion",
+        "category",
+        "description",
+        "fontPacks",
+        "icon",
+        "id",
+        "license",
+        "name",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 0,
+      "contextActionCount": 0,
+      "permissions": [],
+      "hasEntrypoint": false
+    },
+    {
+      "archive": "me.elhizazi.rawanide.editor-lock-1.0.3.r1",
+      "runtime": "hosted-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "commands",
+        "description",
+        "entrypoint",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 3,
+      "contextActionCount": 0,
+      "permissions": [
+        "EDITOR_WRITE",
+        "UI_ACCESS"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.editor-zoom-1.0.2.r1",
+      "runtime": "hosted-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "commands",
+        "description",
+        "editorGestures",
+        "entrypoint",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 8,
+      "contextActionCount": 0,
+      "permissions": [
+        "EDITOR_WRITE"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.eruda-1.0.2.r1",
+      "runtime": "preview-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "description",
+        "entrypoint",
+        "hooks",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 0,
+      "contextActionCount": 0,
+      "permissions": [
+        "NETWORK_ACCESS"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.extension-api-explorer-1.2.0.r1",
+      "runtime": "hosted-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "commands",
+        "description",
+        "entrypoint",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 5,
+      "contextActionCount": 0,
+      "permissions": [
+        "UI_ACCESS"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.file-tools-1.0.1.r1",
+      "runtime": "hosted-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "description",
+        "entrypoint",
+        "fileManager",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 0,
+      "contextActionCount": 0,
+      "permissions": [
+        "DEVICE_FILES_READ",
+        "DEVICE_FILES_WRITE"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.html5-boilerplate-1.1.0.r1",
+      "runtime": "declarative",
+      "manifestKeys": [
+        "apiVersion",
+        "category",
+        "commands",
+        "description",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "publisher",
+        "snippets",
+        "version"
+      ],
+      "commandCount": 1,
+      "contextActionCount": 0,
+      "permissions": [],
+      "hasEntrypoint": false
+    },
+    {
+      "archive": "me.elhizazi.rawanide.iconpack.developer-studio-1.0.1.r1",
+      "runtime": "declarative",
+      "manifestKeys": [
+        "apiVersion",
+        "category",
+        "description",
+        "icon",
+        "iconPack",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 0,
+      "contextActionCount": 0,
+      "permissions": [],
+      "hasEntrypoint": false
+    },
+    {
+      "archive": "me.elhizazi.rawanide.iconpack.visual-style-preview-1.0.2.r1",
+      "runtime": "declarative",
+      "manifestKeys": [
+        "apiVersion",
+        "category",
+        "description",
+        "icon",
+        "iconPack",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 0,
+      "contextActionCount": 0,
+      "permissions": [],
+      "hasEntrypoint": false
+    },
+    {
+      "archive": "me.elhizazi.rawanide.lorem-ipsum-1.0.1.r1",
+      "runtime": "declarative",
+      "manifestKeys": [
+        "apiVersion",
+        "category",
+        "commands",
+        "description",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "publisher",
+        "version"
+      ],
+      "commandCount": 3,
+      "contextActionCount": 0,
+      "permissions": [],
+      "hasEntrypoint": false
+    },
+    {
+      "archive": "me.elhizazi.rawanide.markdown-viewer-1.1.0.r1",
+      "runtime": "preview-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "description",
+        "entrypoint",
+        "hooks",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 0,
+      "contextActionCount": 0,
+      "permissions": [],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.material-workspace-icons-1.0.1.r1",
+      "runtime": "declarative",
+      "manifestKeys": [
+        "apiVersion",
+        "category",
+        "description",
+        "icon",
+        "iconPack",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 0,
+      "contextActionCount": 0,
+      "permissions": [],
+      "hasEntrypoint": false
+    },
+    {
+      "archive": "me.elhizazi.rawanide.path-autocomplete-1.1.0.r1",
+      "runtime": "hosted-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "commands",
+        "description",
+        "entrypoint",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 1,
+      "contextActionCount": 0,
+      "permissions": [
+        "EDITOR_READ",
+        "FILE_READ",
+        "UI_ACCESS"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.project-health-2.0.1.r1",
+      "runtime": "hosted-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "commands",
+        "description",
+        "entrypoint",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 5,
+      "contextActionCount": 0,
+      "permissions": [
+        "DIAGNOSTICS",
+        "EDITOR_READ",
+        "EDITOR_WRITE",
+        "FILE_READ",
+        "UI_ACCESS"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.project-inspector-1.0.3.r1",
+      "runtime": "hosted-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "commands",
+        "description",
+        "entrypoint",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 2,
+      "contextActionCount": 0,
+      "permissions": [
+        "DIAGNOSTICS",
+        "FILE_READ",
+        "UI_ACCESS"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.terminal-runner-1.1.1.r1",
+      "runtime": "hosted-js",
+      "manifestKeys": [
+        "activationEvents",
+        "apiVersion",
+        "category",
+        "commands",
+        "description",
+        "entrypoint",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "permissions",
+        "publisher",
+        "runtime",
+        "version"
+      ],
+      "commandCount": 8,
+      "contextActionCount": 0,
+      "permissions": [
+        "FILE_READ",
+        "TERMINAL_ACCESS",
+        "UI_ACCESS"
+      ],
+      "hasEntrypoint": true
+    },
+    {
+      "archive": "me.elhizazi.rawanide.terminal-themes-1.0.1.r1",
+      "runtime": "declarative",
+      "manifestKeys": [
+        "apiVersion",
+        "category",
+        "description",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "publisher",
+        "runtime",
+        "terminalThemes",
+        "version"
+      ],
+      "commandCount": 0,
+      "contextActionCount": 0,
+      "permissions": [],
+      "hasEntrypoint": false
+    },
+    {
+      "archive": "me.elhizazi.rawanide.theme.github-1.1.1.r1",
+      "runtime": "declarative",
+      "manifestKeys": [
+        "apiVersion",
+        "category",
+        "description",
+        "icon",
+        "id",
+        "license",
+        "localizedMetadata",
+        "name",
+        "publisher",
+        "runtime",
+        "theme",
+        "version"
+      ],
+      "commandCount": 0,
+      "contextActionCount": 0,
+      "permissions": [],
+      "hasEntrypoint": false
+    }
+  ]
+}
