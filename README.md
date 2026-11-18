@@ -7,12 +7,12 @@
 **The official developer CLI for RawanIDE API 1.0 extensions.**
 
 <p>
-<a href="https://github.com/elhizazi1/rawanide-extension-sdk"><img alt="SDK version" src="https://img.shields.io/badge/SDK-1.0.0-19b9ad?style=for-the-badge" /></a>
+<a href="https://www.npmjs.com/package/@elhizazi1/extension-sdk"><img alt="npm version" src="https://img.shields.io/npm/v/@elhizazi1/extension-sdk?style=for-the-badge&color=19b9ad" /></a>
 <a href="https://github.com/elhizazi1/rawanide-extension-sdk/actions"><img alt="Publish workflow" src="https://img.shields.io/github/actions/workflow/status/elhizazi1/rawanide-extension-sdk/publish.yml?style=for-the-badge&label=Publish" /></a>
 <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-555?style=for-the-badge" /></a>
 </p>
 
-**[Get started](#-installation)** · **[CLI commands](#-cli-commands)** · **[Extension templates](#-extension-templates)** · **[RawanIDE for Android](https://github.com/elhizazi1/RawanIDE)** · **[Developer docs](https://rawanide.elhizazi.me/developers)**
+**[Get started](#-installation)** · **[CLI commands](#-cli-commands)** · **[Extension templates](#-extension-templates)** · **[npm package](https://www.npmjs.com/package/@elhizazi1/extension-sdk)** · **[RawanIDE for Android](https://github.com/elhizazi1/RawanIDE)** · **[Developer docs](https://rawanide.elhizazi.me/developers)**
 
 </div>
 
@@ -32,24 +32,90 @@ Create `.r1` extensions from ready-to-use templates, check manifests against the
 
 ## 📦 Installation
 
-Install from **GitHub Packages** under the `@elhizazi1` npm scope. GitHub Packages requires authentication; use a token with `read:packages` permission and repository access if required.
+The RawanIDE Extension SDK is distributed through **npmjs** and **GitHub Packages**. Both use the same package name, `@elhizazi1/extension-sdk`. Choose one registry for installation.
 
-In your local `~/.npmrc` (never commit a real token):
+### Option 1 — npmjs (recommended)
+
+The public npm registry requires **no GitHub token**.
+
+```sh
+npm install -g @elhizazi1/extension-sdk --registry=https://registry.npmjs.org/
+rawanide-sdk help
+```
+
+To install the SDK locally in a project:
+
+```sh
+npm install --save-dev @elhizazi1/extension-sdk --registry=https://registry.npmjs.org/
+npx rawanide-sdk help
+```
+
+To install a specific version:
+
+```sh
+npm install -g @elhizazi1/extension-sdk@1.0.0 --registry=https://registry.npmjs.org/
+```
+
+> [!TIP]
+> If you previously configured `@elhizazi1` to use GitHub Packages, switch the scope back to npmjs before installing:
+>
+> ```sh
+> npm config set @elhizazi1:registry https://registry.npmjs.org/
+> ```
+
+### Option 2 — GitHub Packages (alternative)
+
+GitHub Packages requires authentication for npm package installation. Use a **GitHub personal access token (classic)** with `read:packages` permission, and ensure your account has access to the package.
+
+Configure the scoped registry in your local `~/.npmrc`:
 
 ```ini
 @elhizazi1:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 
-Set `GITHUB_TOKEN` in your local environment, then run:
+Set the `GITHUB_TOKEN` environment variable locally to your own token, then install:
 
 ```sh
 npm install -g @elhizazi1/extension-sdk
 rawanide-sdk help
 ```
 
+For a project-local installation:
+
+```sh
+npm install --save-dev @elhizazi1/extension-sdk
+npx rawanide-sdk help
+```
+
 > [!IMPORTANT]
-> `${GITHUB_TOKEN}` is an environment-variable reference, **not a token value**. Never put credentials in the repository or share them in issue reports.
+> `${GITHUB_TOKEN}` is an environment-variable reference, **not an actual token**. Never commit real credentials to the repository or include them in issue reports. Do not commit a project `.npmrc` containing a token.
+
+### Switching between registries
+
+The `@elhizazi1` scope can point to only one default registry at a time in your npm configuration. Check its current setting:
+
+```sh
+npm config get @elhizazi1:registry
+```
+
+Use npmjs (recommended):
+
+```sh
+npm config set @elhizazi1:registry https://registry.npmjs.org/
+```
+
+Or use GitHub Packages (with authentication configured as above):
+
+```sh
+npm config set @elhizazi1:registry https://npm.pkg.github.com/
+```
+
+The compatibility command is also available after installation:
+
+```sh
+rawanide --help
+```
 
 ## ⚡ Quick start
 
@@ -65,6 +131,8 @@ Named projects are created in `workspace/projects/`, and named packages are writ
 rawanide-sdk init hosted-js-panel "$HOME/my-panel"
 rawanide-sdk pack "$HOME/my-panel" "$HOME/my-panel.r1"
 ```
+
+The resulting `.r1` archive can be installed in a compatible RawanIDE application.
 
 ## 🧰 CLI commands
 
@@ -111,7 +179,17 @@ Each template includes a manifest, icon, README, and license template. Context-a
 
 ## 🚀 Publishing & releases
 
-The GitHub Actions workflow at `.github/workflows/publish.yml` publishes `@elhizazi1/extension-sdk` to **GitHub Packages** when a matching version tag is pushed. The workflow checks the version, runs SDK tests, and performs a release check before publishing. A local ZIP is not a published npm package.
+The SDK is available through **npmjs** (recommended for developers) and **GitHub Packages** (an additional distribution channel).
+
+The existing GitHub Actions workflow at `.github/workflows/publish.yml` publishes to **GitHub Packages** when a matching version tag is pushed. The workflow checks the version, runs SDK tests, and performs a release check before publishing. It does **not** automatically publish to npmjs.
+
+For maintainers, after updating the version, running checks, and reviewing the package contents, publish a new version to npmjs with:
+
+```sh
+npm publish --access public --registry=https://registry.npmjs.org/
+```
+
+Publishing requires an authorized npm account and the registry's applicable authentication requirements. Every published version is immutable: use a new version for each update (for example, `1.0.1` for a patch or `1.1.0` for a backward-compatible feature). A local ZIP is not a published npm package.
 
 ## 🔗 Related projects & resources
 
@@ -119,7 +197,8 @@ The GitHub Actions workflow at `.github/workflows/publish.yml` publishes `@elhiz
 | :-- | :-- |
 | 📱 RawanIDE Android app | [elhizazi1/RawanIDE](https://github.com/elhizazi1/RawanIDE) |
 | 📖 Developer documentation | [rawanide.elhizazi.me/developers](https://rawanide.elhizazi.me/developers) |
-| 📦 Package versions | [GitHub Packages](https://github.com/elhizazi1/rawanide-extension-sdk/packages) |
+| 📦 Official npm package | [@elhizazi1/extension-sdk](https://www.npmjs.com/package/@elhizazi1/extension-sdk) |
+| 🐙 GitHub Packages | [GitHub package registry](https://github.com/elhizazi1/rawanide-extension-sdk/packages) |
 | 📚 Additional SDK notes | [`docs/`](docs/) |
 
 ## ⚖️ License
