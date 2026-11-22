@@ -1,6 +1,6 @@
 # 0.8.0 compatibility audit (preview)
 
-This release adds a **static** `audit` command and a read-only manifest field inventory from 22 community extension archives supplied for SDK development. The archives are not bundled or redistributed.
+This release adds a **static** `audit` command and a read-only manifest field inventory from 22 community extension archives. The archives are not bundled or redistributed.
 
 `node bin/rawanide.mjs audit templates/hosted-js-safe-edit`
 

@@ -223,7 +223,7 @@ rawanide-sdk init hosted-js-project-search my-project-search
 
 ## 🤝 Contributing and maintenance
 
-For people changing the SDK itself. GitHub Packages publication uses the supplied GitHub-only workflow; see [maintainer publication guide](https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/docs/GITHUB_DISTRIBUTION.md).
+For people changing the SDK itself. GitHub Packages publication uses the GitHub-only workflow; see [maintainer publication guide](https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/docs/GITHUB_DISTRIBUTION.md).
 
 **Run the checks** from a source checkout:
 

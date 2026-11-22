@@ -39,3 +39,12 @@ Kept in the source repository for traceability. They describe earlier previews, 
 
 - [Workspace search contract](workspace-search-1.1.md)
 - [توثيق البحث في المشروع](workspace-search-1.1.ar.md)
+
+## Distribution maintainers / مشرفو التوزيع
+
+- [GitHub Packages distribution](GITHUB_DISTRIBUTION.md)
+- [npm distribution](NPM_DISTRIBUTION.md)
+
+These guides cover SDK distribution maintenance. Extension developers should follow the main README to build and publish their own extensions.
+
+تخص هذه الأدلة صيانة توزيع SDK. يتبع مطوّر الإضافات README الرئيسي لبناء إضافاته ونشرها.
