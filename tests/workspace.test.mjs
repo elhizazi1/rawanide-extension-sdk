@@ -11,7 +11,7 @@ const managed=path.join(root,'workspace/projects');
 const dist=path.join(root,'workspace/dist');
 const name='workspace-test-fixture';
 const project=path.join(managed,name);
-const archive=path.join(dist,name+'.r1');
+const archive=path.join(project,name+'.r1');
 test('managed workspace creates project, validates and packs archive',()=>{
  fs.rmSync(project,{recursive:true,force:true});fs.rmSync(archive,{force:true});
  try{
@@ -20,7 +20,7 @@ test('managed workspace creates project, validates and packs archive',()=>{
   assert.equal(run('validate',name).status,0);
   assert.equal(run('inspect',name).status,0);
   assert.equal(run('audit',name).status,0);
-  assert.equal(run('pack',name,name+'.r1').status,0);
+  assert.equal(run('pack',name).status,0);
   assert.ok(fs.statSync(archive).size>0);
  }finally{fs.rmSync(project,{recursive:true,force:true});fs.rmSync(archive,{force:true});}
 });

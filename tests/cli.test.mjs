@@ -7,7 +7,7 @@ import path from 'node:path';
 const root=path.resolve(import.meta.dirname,'..');
 test('hosted-js template validates',()=>{const output=execFileSync(process.execPath,[path.join(root,'bin/rawanide.mjs'),'validate',path.join(root,'templates/hosted-js')],{encoding:'utf8'});assert.match(output,/PASS/)});
 test('declarative template validates',()=>{const output=execFileSync(process.execPath,[path.join(root,'bin/rawanide.mjs'),'validate',path.join(root,'templates/declarative')],{encoding:'utf8'});assert.match(output,/PASS/)});
-test('contract is source-grounded',()=>{const c=JSON.parse(readFileSync(path.join(root,'contract.json')));assert.equal(c.apiVersion,'1.0');assert.equal(c.maxEntries,2000);assert.ok(c.permissions.includes('PROCESS_EXECUTION'))});
+test('contract is source-grounded',()=>{const c=JSON.parse(readFileSync(path.join(root,'contract.json')));assert.equal(c.apiVersion,'1.1');assert.equal(c.maxEntries,2000);assert.ok(c.permissions.includes('PROCESS_EXECUTION'))});
 
 test('hello template registers a real hosted-js command',()=>{
  const code=readFileSync(path.join(root,'templates/hosted-js/src/main.js'),'utf8');

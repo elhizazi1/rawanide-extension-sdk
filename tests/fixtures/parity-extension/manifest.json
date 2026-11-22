@@ -1,0 +1,20 @@
+{
+  "id": "local.parity-fixture",
+  "name": "Parity Fixture",
+  "version": "1.0.0",
+  "publisher": "RawanIDE SDK Tests",
+  "description": "Fixed input used to prove that every packer produces identical archives.",
+  "localizedMetadata": {
+    "en": { "name": "Parity Fixture", "description": "Fixed input for packer parity tests." },
+    "ar": { "name": "مثال التكافؤ", "description": "مدخل ثابت لاختبار تطابق المغلِّفات." }
+  },
+  "apiVersion": "1.0",
+  "runtime": "hosted-js",
+  "category": "Tools",
+  "entrypoint": "src/main.js",
+  "activationEvents": ["onCommand"],
+  "permissions": ["UI_ACCESS"],
+  "commands": [{ "id": "local.parity-fixture.run", "title": "Parity: Run", "runtime": true }],
+  "icon": "assets/icon.svg",
+  "license": "MIT"
+}

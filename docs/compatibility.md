@@ -1,16 +1,9 @@
-# Source compatibility review — first pass
+# Compatibility
 
-**Source:** user-supplied `RawanIDE_build.zip` (Android app source).
+SDK 1.1.0 targets host API 1.1. `.r1` format stays at 1. Same-major extensions requiring API 1.0 remain supported. Canonical API versions use major.minor; legacy zero-patch spellings such as 1.0.0 normalize to 1.0. Newer minor requirements and other major versions are rejected.
 
-Confirmed from `ExtensionContract.kt` and `ExtensionPackageValidator.kt`:
-- API version `1.0`; `.r1` ZIP; root `manifest.json` with `extension.json` fallback.
-- Runtimes: `declarative`, `hosted-js`, `preview-js`.
-- 100 MiB compressed cap, 2,000 ZIP entries, 512 KiB manifest cap, 300 MiB uncompressed cap.
-- Manifest fields `id`, `name`, `version`; hosted JS requires existing `entrypoint`.
-- `PROCESS_EXECUTION` is declared but reserved; `PROJECT_ACCESS` is official-source-only under standard community policy.
-- Network permissions include `allowedDomains` and `unrestrictedNetwork` constraints.
-- `HostedJsHarness.kt` exposes `globalThis.rawanide` and several namespaces, including `editor`, `workspace`, `diagnostics`, `extensions`, `env`, `statusBar`, `keybindings`, `window10`, and `languages10`.
+Existing five templates use API 1.0 because they need only baseline interfaces. The new hosted-js-project-search template requires API 1.1. SDK version and host API version advance together for public capability changes; extension package versions are independent.
 
-**Still to verify before SDK v1.0.0:** full JS method signatures, actual permission enforcement for every API, command/activation semantics, `preview-js` repository policy, documentation-by-documentation parity, archive trust/signature behavior, integration tests with real community packages.
+New APIs: workspace.findFiles(options) and workspace.findText(query, options). Both require FILE_READ. See workspace-search-1.1.md and workspace-search-1.1.ar.md for precise result, cancellation and coordinate semantics.
 
-The CLI implements a **conservative subset** of host validation; it is not a substitute for Android installation tests.
+Existing permissions, archive limits, runtimes and .r1 conventions are retained. Type declarations cover a reviewed subset, now including the search contract; they do not declare every legacy host method. Static CLI checks and Node/JVM bridge tests do not substitute for on-device Android verification.

@@ -4,6 +4,16 @@
   "version": "0.4.0",
   "publisher": "RawanIDE SDK Example",
   "description": "Offline HTML panel sample",
+  "localizedMetadata": {
+    "en": {
+      "name": "SDK Panel Example",
+      "description": "Offline HTML panel sample"
+    },
+    "ar": {
+      "name": "لوحة إضافة — مثال",
+      "description": "أمر يفتح لوحة HTML داخل التطبيق دون اتصال."
+    }
+  },
   "apiVersion": "1.0",
   "runtime": "hosted-js",
   "category": "Tools",

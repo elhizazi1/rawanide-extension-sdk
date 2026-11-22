@@ -1,10 +1,23 @@
 {
-  "id": "com.example.theme",
+  "id": "local.sdk-declarative",
   "name": "Example Declarative Extension",
   "version": "0.1.0",
+  "publisher": "RawanIDE SDK Example",
+  "description": "Minimal declarative extension template",
+  "localizedMetadata": {
+    "en": {
+      "name": "Example Declarative Extension",
+      "description": "Minimal declarative extension template"
+    },
+    "ar": {
+      "name": "إضافة تعريفية — مثال",
+      "description": "نقطة بداية لإضافة تعريفية؛ أضف المساهمات المدعومة التي تحتاجها."
+    }
+  },
   "apiVersion": "1.0",
   "runtime": "declarative",
   "permissions": [],
   "icon": "assets/icon.svg",
-  "license": "MIT"
+  "license": "MIT",
+  "category": "Tools"
 }

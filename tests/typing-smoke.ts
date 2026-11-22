@@ -20,3 +20,15 @@ rawanide.editor?.applyEdits([{start:'0',end:1,newText:'x'}]);
 rawanide.commands.registerCommand('local.invalid', 'Invalid', 'not-a-function');
 // @ts-expect-error: showToast takes a string
 rawanide.window.showToast(42);
+
+const workspace = rawanide.workspace;
+if (workspace) {
+ workspace.findFiles({include:['**/*.js'],maxResults:100}).then(result => { if(result.ok) result.files.forEach(file => { void file.path; void file.size; }); });
+ workspace.findText('TODO',{caseSensitive:false,signal:new AbortController().signal}).then(result => { result.matches.forEach(match => { void match.line; void match.offset; }); });
+ // @ts-expect-error: query is text
+ workspace.findText(42);
+ // @ts-expect-error: include globs are strings
+ workspace.findFiles({include:[42]});
+ // @ts-expect-error: maxFileBytes is only a text-search option
+ workspace.findFiles({maxFileBytes:1000});
+}

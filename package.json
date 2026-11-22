@@ -1,12 +1,13 @@
 {
   "name": "@elhizazi1/extension-sdk",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": false,
   "description": "Official RawanIDE Extension SDK CLI for building and validating .r1 extensions",
   "type": "module",
   "bin": {
-    "rawanide-sdk": "./bin/rawanide-sdk.mjs",
-    "rawanide": "./bin/rawanide.mjs"
+    "rawanide-sdk": "bin/rawanide-sdk.mjs",
+    "rawanide": "bin/rawanide-sdk.mjs",
+    "rawanide-sdk-desktop": "bin/rawanide-sdk.mjs"
   },
   "scripts": {
     "test": "node --test tests/*.test.mjs",
@@ -14,7 +15,8 @@
     "check:types": "node --test tests/types.test.mjs",
     "check:release": "node bin/rawanide.mjs release-check",
     "check:types:compile": "tsc --noEmit --strict --skipLibCheck --target ES2020 tests/typing-smoke.ts",
-    "check:archives": "node --test tests/archive-integration.test.mjs"
+    "check:archives": "node --test tests/archive-integration.test.mjs",
+    "postinstall": "node scripts/fix-termux-bin.mjs"
   },
   "engines": {
     "node": ">=18"
@@ -23,16 +25,20 @@
   "files": [
     "bin/",
     "contract.json",
+    "community-rules.json",
+    "lib/",
     "templates/",
     "types/",
-    "docs/",
+    "docs/*.md",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "scripts/"
   ],
   "types": "./types/rawanide.d.ts",
   "exports": {
     "./types": "./types/rawanide.d.ts",
-    "./contract": "./contract.json"
+    "./contract": "./contract.json",
+    "./community-rules": "./community-rules.json"
   },
   "homepage": "https://github.com/elhizazi1/rawanide-extension-sdk#readme",
   "repository": {
@@ -43,7 +49,7 @@
     "url": "https://github.com/elhizazi1/rawanide-extension-sdk/issues"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   }
 }

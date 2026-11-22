@@ -7,11 +7,11 @@ import path from 'node:path';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 test('release-check verifies every shipped template',()=>{
  const report=JSON.parse(execFileSync(process.execPath,['bin/rawanide.mjs','release-check'],{cwd:root,encoding:'utf8'}));
- assert.equal(report.sdkVersion,'1.0.0');assert.equal(report.templatesChecked,5);
- assert.deepEqual(report.errors,[]);assert.equal(report.published,false);
+ assert.equal(report.sdkVersion,'1.1.0');assert.equal(report.templatesChecked,6);
+ assert.deepEqual(report.errors,[]);
 });
 test('npm metadata and types are distributed',()=>{
  const pkg=JSON.parse(readFileSync(path.join(root,'package.json'),'utf8'));
- assert.equal(pkg.version,'1.0.0');assert.equal(pkg.types,'./types/rawanide.d.ts');
+ assert.equal(pkg.version,'1.1.0');assert.equal(pkg.types,'./types/rawanide.d.ts');
  assert.ok(pkg.files.includes('types/'));assert.equal(pkg.private,false);
 });

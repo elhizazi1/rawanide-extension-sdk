@@ -1,5 +1,5 @@
 {
-  "apiVersion": "1.0",
+  "apiVersion": "1.1",
   "formatVersion": 1,
   "runtimes": [
     "declarative",
@@ -49,6 +49,32 @@
   "sourceFiles": [
     "ExtensionContract.kt",
     "ExtensionPackageValidator.kt",
-    "IdeModels.kt"
-  ]
+    "IdeModels.kt",
+    "HostedJsHarness.kt",
+    "WorkspaceSearchLimits.kt",
+    "WorkspaceSearchEngine.kt",
+    "HostedWorkspaceSearchApi.kt"
+  ],
+  "features": {
+    "workspaceSearch": {
+      "since": "1.1",
+      "permission": "FILE_READ",
+      "methods": [
+        "workspace.findFiles",
+        "workspace.findText"
+      ],
+      "maxResults": 200,
+      "defaultMaxResults": 100,
+      "maxEntries": 20000,
+      "defaultMaxEntries": 10000,
+      "maxFileBytes": 1048576,
+      "defaultMaxFileBytes": 262144,
+      "maxTotalBytes": 16777216,
+      "cooperativeBudgetMs": 5000,
+      "maxConcurrentSearches": 2,
+      "maxQueryLength": 256,
+      "coordinates": "1-based line/column; 0-based UTF-16 offsets; exclusive end",
+      "source": "saved UTF-8 files on disk"
+    }
+  }
 }

@@ -4,6 +4,16 @@
   "version": "0.5.0",
   "publisher": "RawanIDE SDK Example",
   "description": "Offline context action and HTML panel example for selected editor text",
+  "localizedMetadata": {
+    "en": {
+      "name": "SDK Selection Panel Example",
+      "description": "Offline context action and HTML panel example for selected editor text"
+    },
+    "ar": {
+      "name": "لوحة النص المحدد — مثال",
+      "description": "إجراء سياقي يعرض النص المحدد في لوحة للقراءة فقط."
+    }
+  },
   "apiVersion": "1.0",
   "runtime": "hosted-js",
   "entrypoint": "src/extension.js",

@@ -4,6 +4,16 @@
   "version": "0.6.0",
   "publisher": "RawanIDE SDK Example",
   "description": "Offline selection replacement with explicit confirmation and expected-text guard",
+  "localizedMetadata": {
+    "en": {
+      "name": "SDK Safe Edit Example",
+      "description": "Offline selection replacement with explicit confirmation and expected-text guard"
+    },
+    "ar": {
+      "name": "التعديل الآمن للنص المحدد — مثال",
+      "description": "استبدال النص المحدد بعد تأكيد صريح من المستخدم."
+    }
+  },
   "apiVersion": "1.0",
   "runtime": "hosted-js",
   "entrypoint": "src/extension.js",

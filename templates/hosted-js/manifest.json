@@ -4,6 +4,16 @@
   "version": "0.3.0",
   "publisher": "RawanIDE SDK Example",
   "description": "A test command that displays a toast when invoked from Extension Commands.",
+  "localizedMetadata": {
+    "en": {
+      "name": "Hello RawanIDE",
+      "description": "A test command that displays a toast when invoked from Extension Commands."
+    },
+    "ar": {
+      "name": "أمر JavaScript — مثال",
+      "description": "أمر يسجّله JavaScript ويعرض رسالة Toast."
+    }
+  },
   "apiVersion": "1.0",
   "runtime": "hosted-js",
   "category": "Tools",

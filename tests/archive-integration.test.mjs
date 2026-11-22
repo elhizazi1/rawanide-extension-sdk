@@ -36,15 +36,19 @@ for(const template of templates){
   }finally{fs.rmSync(temp,{recursive:true,force:true});}
  });
 }
-test('pack rejects output archive placed inside extension source',()=>{
+test('pack defaults to project folder and excludes git and previous archives',()=>{
  const temp=fs.mkdtempSync(path.join(os.tmpdir(),'rawanide-sdk-'));
  try{
   const folder=path.join(temp,'ext');run('init','declarative',folder);
-  const output=path.join(folder,'self.r1');
-  const result=spawnSync(process.execPath,[cli,'pack',folder,output],{encoding:'utf8'});
-  assert.notEqual(result.status,0);
-  assert.match(result.stderr,/outside the source directory/);
-  assert.equal(fs.existsSync(output),false);
+  fs.mkdirSync(path.join(folder,'.git'));fs.writeFileSync(path.join(folder,'.git','config'),'secret');
+  fs.mkdirSync(path.join(folder,'node_modules'));fs.writeFileSync(path.join(folder,'node_modules','junk'),'junk');
+  const output=path.join(folder,'ext.r1');
+  run('pack',folder);
+  assert.ok(fs.existsSync(output));
+  run('pack',folder);
+  const info=archiveInfo(output);
+  assert.ok(!info.names.some(n=>n.startsWith('.git/')||n.startsWith('node_modules/')||n.endsWith('.r1')));
+  assert.equal(info.bad,null);
  }finally{fs.rmSync(temp,{recursive:true,force:true});}
 });
 test('pack rejects missing icon before writing an archive',()=>{

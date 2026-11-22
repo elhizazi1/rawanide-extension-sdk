@@ -1,26 +1,59 @@
-# SDK Panel Example
+# 🧩 SDK Panel Example
 
-Template type: `hosted-js-panel`. A command that opens a host HTML panel.
+[العربية](README.ar.md) · **English**
 
-## Get started
+Template type: `hosted-js-panel`. A command that opens an HTML panel inside the app (offline, no network access).
+
+| | |
+| :-- | :-- |
+| Runtime | `hosted-js` |
+| Permissions | `UI_ACCESS` |
+| Entry point | `src/extension.js` |
+
+> 💡 **Tip:** everything below runs from inside this folder; the SDK is the only thing to install.
+
+<a id="get-started"></a>
+
+## 🚀 Get started
 
 1. Replace `assets/icon.svg` with your own icon, or update the `icon` path in `manifest.json`.
-2. Update the extension ID, publisher, name, version, description, and other metadata in `manifest.json`.
-3. Review the requested permissions and remove any not required by your extension.
+2. Edit `manifest.json`: set a unique `id` (the current one is a placeholder), and update `name`, `version`, `publisher`, `description`, and other metadata.
+3. Review the requested permissions and remove any your extension does not need.
 4. **Choose your license before distributing.** `LICENSE` contains a sample MIT license with `[YEAR]` and `[COPYRIGHT HOLDER]` placeholders. Replace those placeholders if you select MIT, or replace the entire file and update the `license` manifest field if you select another license.
-5. Edit the implementation files as needed.
+5. Replace this `README.md` and `README.ar.md` with your extension's own. Every file in this folder is packed into the `.r1`.
+6. Edit `src/extension.js`, and keep command IDs in the manifest and in `registerCommand` identical.
 
-## Validate and package
+<a id="validate-and-package"></a>
 
-From the SDK root (replace `<extension-folder>` with your project path):
+## ✅ Validate and package
+
+Install the SDK once (`npm install -g @elhizazi1/extension-sdk`; see the [SDK README](https://github.com/elhizazi1/rawanide-extension-sdk#installation)), then run from inside this folder:
 
 ```bash
-node bin/rawanide.mjs validate <extension-folder>
-node bin/rawanide.mjs audit <extension-folder>
-node bin/rawanide.mjs pack <extension-folder> my-extension.r1
+rawanide-sdk validate .
+rawanide-sdk audit .
+rawanide-sdk pack . my-extension.r1
 ```
 
-## Compatibility
+`pack` creates `my-extension.r1` in the current folder. Working from an SDK source checkout instead? Use `node <path-to-sdk>/bin/rawanide-sdk.mjs` in place of `rawanide-sdk`.
+
+> 💡 Planning to publish in a community repository? Also run `rawanide-sdk validate . --repository`. This template already meets those rules.
+
+<a id="test-in-rawanide"></a>
+
+## 📱 Test in RawanIDE
+
+Install `my-extension.r1` with **Install .r1** in the app, enable it, and open a project. Then run **SDK Panel: Open** from **Extension Commands**. Passing `validate` and `audit` does not prove the extension works on Android.
+
+<a id="publish"></a>
+
+## 🌍 Publish
+
+To share the extension, see **Publish your extension** in the [SDK README](https://github.com/elhizazi1/rawanide-extension-sdk#publish-your-extension). This template already includes the `localizedMetadata` and catalog fields that community repositories require; re-check your changes with `rawanide-sdk validate . --repository`.
+
+<a id="compatibility"></a>
+
+## ⚙️ Compatibility
 
 - Manifest `apiVersion` remains `1.0` to match the current host contract. The SDK package version is independent.
 - This is a development template, not a completed extension for publication.

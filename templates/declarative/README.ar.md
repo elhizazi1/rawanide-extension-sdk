@@ -1,0 +1,60 @@
+# 🧩 إضافة تعريفية — مثال RawanIDE
+
+**العربية** · [English](README.md)
+
+نوع القالب: `declarative`. نقطة بداية لإضافة تعريفية، أضف المساهمات المدعومة التي تحتاجها.
+
+| | |
+| :-- | :-- |
+| بيئة التشغيل (runtime) | `declarative` |
+| الصلاحيات | لا شيء |
+| نقطة الدخول | لا يوجد (Manifest فقط) |
+
+> 💡 **نصيحة:** كل ما يلي يُنفَّذ من داخل هذا المجلد؛ والـ SDK هو الشيء الوحيد الذي تحتاج لتثبيته.
+
+<a id="البدء"></a>
+
+## 🚀 البدء
+
+1. استبدل `assets/icon.svg` بأيقونتك أو حدّث مسار `icon` في `manifest.json`.
+2. عدّل `manifest.json`: حدّد `id` فريدًا (المعرّف الحالي مؤقت)، وحدّث `name` و`version` و`publisher` و`description` وباقي البيانات.
+3. راجع الصلاحيات المطلوبة واحذف غير الضروري منها.
+4. **اختر الترخيص قبل التوزيع.** يحتوي `LICENSE` على نموذج MIT مع موضعَي `[YEAR]` و`[COPYRIGHT HOLDER]`. استبدلهما إذا اخترت MIT، أو استبدل الملف كله وعدّل حقل `license` في Manifest إذا اخترت ترخيصًا آخر.
+5. استبدل ملفَّي `README.md` و`README.ar.md` هذين بملفات خاصة بإضافتك. فكل ملف في هذا المجلد يُضمّ إلى حزمة `.r1`.
+6. أضف المساهمات التعريفية التي تحتاجها إلى `manifest.json`.
+
+<a id="التحقق-والتغليف"></a>
+
+## ✅ التحقق والتغليف
+
+ثبّت SDK مرة واحدة (`npm install -g @elhizazi1/extension-sdk`؛ راجع [README الخاص بـ SDK](https://github.com/elhizazi1/rawanide-extension-sdk#installation))، ثم شغّل الأوامر من داخل هذا المجلد:
+
+```bash
+rawanide-sdk validate .
+rawanide-sdk audit .
+rawanide-sdk pack . my-extension.r1
+```
+
+ينشئ `pack` الملف `my-extension.r1` في المجلد الحالي. وإن كنت تعمل من المشروع المصدري لـ SDK فاستخدم `node <path-to-sdk>/bin/rawanide-sdk.mjs` بدل `rawanide-sdk`.
+
+> 💡 تنوي النشر في مستودع مجتمع؟ شغّل أيضًا `rawanide-sdk validate . --repository`. هذا القالب يحقق تلك القواعد أصلًا.
+
+<a id="الاختبار-في-rawanide"></a>
+
+## 📱 الاختبار في RawanIDE
+
+ثبّت `my-extension.r1` بزر **تثبيت .r1** في التطبيق، وفعّل الإضافة، وافتح مشروعًا. لا يصرّح هذا القالب بأي مساهمات بعد، فلن يظهر شيء في التطبيق حتى تضيف مساهمات إلى `manifest.json`. نجاح `validate` و`audit` لا يثبت أن الإضافة تعمل على Android.
+
+<a id="النشر"></a>
+
+## 🌍 النشر
+
+لمشاركة الإضافة، راجع قسم **انشر إضافتك** في [README الخاص بـ SDK](https://github.com/elhizazi1/rawanide-extension-sdk#publish-your-extension). ويتضمن هذا القالب أصلًا `localizedMetadata` وحقول الفهرس التي تشترطها مستودعات المجتمع؛ أعد فحص تعديلاتك بالأمر `rawanide-sdk validate . --repository`.
+
+<a id="التوافق"></a>
+
+## ⚙️ التوافق
+
+- تبقى قيمة `apiVersion` في Manifest هي `1.0` للتوافق مع التطبيق؛ وهي مستقلة عن إصدار حزمة SDK.
+- هذا قالب تطوير وليس إضافة مكتملة جاهزة للنشر.
+- الأيقونة مؤقتة ويجب استبدالها قبل النشر.

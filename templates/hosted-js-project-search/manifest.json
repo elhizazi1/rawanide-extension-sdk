@@ -1,0 +1,45 @@
+{
+  "id": "example.project-search",
+  "name": "Project Search Example",
+  "version": "0.1.0",
+  "apiVersion": "1.1",
+  "runtime": "hosted-js",
+  "entrypoint": "src/extension.js",
+  "permissions": [
+    "FILE_READ",
+    "UI_ACCESS"
+  ],
+  "activationEvents": [
+    "onCommand"
+  ],
+  "icon": "assets/icon.svg",
+  "publisher": "Example Publisher",
+  "license": "MIT",
+  "category": "Developer Tools",
+  "description": "Read-only project search example using API 1.1.",
+  "localizedMetadata": {
+    "en": {
+      "name": "Project Search Example",
+      "description": "Search saved project files."
+    },
+    "ar": {
+      "name": "مثال بحث المشروع",
+      "description": "البحث في ملفات المشروع المحفوظة."
+    }
+  },
+  "commands": [
+    {
+      "id": "example.project-search.run",
+      "title": "Find TODO in project",
+      "runtime": true,
+      "localized": {
+        "ar": {
+          "title": "البحث عن TODO في المشروع"
+        },
+        "en": {
+          "title": "Find TODO in project"
+        }
+      }
+    }
+  ]
+}

@@ -2,14 +2,20 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
+import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
+import {isCompatibleApiVersion} from '../lib/api-version.mjs';
+import {listFiles,makeZip} from '../lib/zip.mjs';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const contract=JSON.parse(fs.readFileSync(path.join(here,'../contract.json'),'utf8'));
-const [,,command,...args]=process.argv;
+const rules=JSON.parse(fs.readFileSync(path.join(here,'../community-rules.json'),'utf8'));
+const sdkVersion=JSON.parse(fs.readFileSync(path.join(here,'../package.json'),'utf8')).version;
+const [,,command,...rawArgs]=process.argv;
+const flags=new Set(rawArgs.filter(a=>a.startsWith('--')));
+const args=rawArgs.filter(a=>!a.startsWith('--')); // positional arguments only
 const sdkRoot=path.resolve(here,'..');
 const workspace=process.env.RAWANIDE_SDK_WORKSPACE || path.join(sdkRoot,'workspace');
 const projectsDir=path.join(workspace,'projects');
-const distDir=path.join(workspace,'dist');
 const isBareName=(value)=>typeof value==='string'&&value.length>0&&value!=='.'&&value!=='..'&&!value.includes('/')&&!value.includes('\\')&&!path.isAbsolute(value);
 const projectPath=(value)=>{
  if(!value)return process.cwd();
@@ -22,11 +28,8 @@ const projectPath=(value)=>{
  return local;
 };
 const archivePath=(value,project)=>{
- if(value){
-  if(isBareName(value)&&value.endsWith('.r1'))return path.join(distDir,value);
-  return path.resolve(value); // Explicit paths retain legacy behavior.
- }
- return path.join(distDir,path.basename(project)+'.r1');
+ if(value)return path.resolve(value);
+ return path.join(project,path.basename(project)+'.r1');
 };
 const fail=(msg)=>{console.error('ERROR: '+msg);process.exitCode=1};
 function validate(manifest,files=[],source='community'){
@@ -36,8 +39,7 @@ function validate(manifest,files=[],source='community'){
  if(!/^[a-z0-9][a-z0-9._-]{2,127}$/.test(manifest.id||''))add('Invalid id');
  if(typeof manifest.name!=='string'||!manifest.name.trim())add('Missing name');
  if(typeof manifest.version!=='string'||!manifest.version.trim())add('Missing version');
- const api=String(manifest.apiVersion??'1.0').trim().split('.');
- if(api.length>2||!api.every(x=>/^\d+$/.test(x))||Number(api[0])!==1||Number(api[1]||0)>0)add('Unsupported apiVersion');
+ if(!isCompatibleApiVersion(String(manifest.apiVersion??'1.0'),contract.apiVersion))add('Unsupported apiVersion');
  const runtime=manifest.runtime??'declarative';
  if(!contract.runtimes.includes(runtime))add('Unsupported runtime');
  if(manifest.permissions!==undefined&&!Array.isArray(manifest.permissions))add('permissions must be an array');
@@ -101,13 +103,21 @@ function validate(manifest,files=[],source='community'){
  if(manifest.unrestrictedNetwork===true&&!(manifest.permissions||[]).includes('NETWORK_ACCESS'))add('unrestrictedNetwork requires NETWORK_ACCESS');
  return errors;
 }
-function walk(dir,base=''){
- return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>{
- const relative=path.posix.join(base,e.name),full=path.join(dir,e.name);
- if(e.isSymbolicLink())throw new Error('Symlinks are not supported: '+relative);
- return e.isDirectory()?walk(full,relative):[relative];
- });
+function repositoryErrors(manifest){
+ const errors=[];
+ if(!manifest||typeof manifest!=='object'||Array.isArray(manifest))return errors;
+ const add=(x)=>errors.push('Repository: '+x);
+ if(!new RegExp(rules.versionPattern).test(String(manifest.version||'')))add('version must match '+rules.versionPattern);
+ const runtime=manifest.runtime??null;
+ if(runtime===null?!rules.allowNoRuntime:!rules.allowedRuntimes.includes(runtime))add('runtime "'+(runtime??'none')+'" is not allowed (allowed: '+rules.allowedRuntimes.join(', ')+(rules.allowNoRuntime?', or none':'')+')');
+ for(const p of Array.isArray(manifest.permissions)?manifest.permissions:[])if(rules.blockedPermissions.includes(p))add('permission '+p+' is not allowed');
+ if(typeof manifest.icon!=='string'||!manifest.icon)add('manifest "icon" is required');
+ for(const lang of rules.requiredLocalizedLanguages){const l=manifest.localizedMetadata&&manifest.localizedMetadata[lang];if(!l||typeof l!=='object')add('localizedMetadata.'+lang+' is required');}
+ return errors;
 }
+const repositoryWarnings=(manifest)=>(rules.recommendedManifestFields||[]).filter(f=>!manifest||typeof manifest[f]!=='string'||!manifest[f].trim()).map(f=>'Repository: "'+f+'" is recommended (it is shown in the catalog)');
+const walk=(dir)=>listFiles(dir); // same file selection as the community repository builder
+
 try{
  if(command==='release-check'){
   const root=path.resolve(here,'..');
@@ -135,7 +145,7 @@ try{
     for(const id of declared)if(!registered.includes(id))problems.push(template+': missing handler '+id);
    }
   }
-  const report={sdkVersion:packageJson.version,templatesChecked:templates.length,errors:problems,staticOnly:true,published:false};
+  const report={sdkVersion:packageJson.version,templatesChecked:templates.length,errors:problems,staticOnly:true};
   console.log(JSON.stringify(report,null,2));
   if(problems.length)process.exitCode=1;
  }else if(command==='audit'){
@@ -146,8 +156,9 @@ try{
   if(content.length>contract.maxManifestBytes)throw new Error('Manifest exceeds 512 KB');
   const manifest=JSON.parse(content);
   const files=walk(folder);
-  const errors=validate(manifest,files,args.includes('--official')?'official':'community');
+  const errors=validate(manifest,files,flags.has('--official')?'official':'community');
   const warnings=[];
+  if(flags.has('--repository')){errors.push(...repositoryErrors(manifest));warnings.push(...repositoryWarnings(manifest));}
   if(manifest.runtime==='hosted-js'&&manifest.entrypoint&&files.includes(manifest.entrypoint)){
     const js=fs.readFileSync(path.join(folder,manifest.entrypoint),'utf8');
     const registered=[...js.matchAll(/\bregisterCommand\s*\(\s*['"]([^'"]+)['"]/g)].map(x=>x[1]);
@@ -166,7 +177,8 @@ try{
   if(!name)throw new Error('Missing manifest.json or extension.json');
   const manifest=JSON.parse(fs.readFileSync(path.join(folder,name),'utf8'));
   const files=walk(folder);
-  const errors=validate(manifest,files,args.includes('--official')?'official':'community');
+  const errors=validate(manifest,files,flags.has('--official')?'official':'community');
+  if(flags.has('--repository'))errors.push(...repositoryErrors(manifest));
   const report={id:manifest.id,version:manifest.version,runtime:manifest.runtime??'declarative',entrypoint:manifest.entrypoint??null,permissions:manifest.permissions??[],commands:(manifest.commands??[]).map(c=>({id:c.id,title:c.title,hidden:c.hidden===true})),contextActions:(manifest.contextActions??[]).length,files:files.length,errors};
   console.log(JSON.stringify(report,null,2));
   if(errors.length)process.exitCode=1;
@@ -177,7 +189,8 @@ try{
   if(content.length>contract.maxManifestBytes)throw new Error('Manifest exceeds 512 KB');
   const manifest=JSON.parse(content);
   const files=walk(folder);
-  const errors=validate(manifest,files,args.includes('--official')?'official':'community');
+  const errors=validate(manifest,files,flags.has('--official')?'official':'community');
+  if(flags.has('--repository'))errors.push(...repositoryErrors(manifest));
   if(manifest.runtime==='hosted-js'&&manifest.entrypoint&&files.includes(manifest.entrypoint)){
     const js=fs.readFileSync(path.join(folder,manifest.entrypoint),'utf8');
     const registered=[...js.matchAll(/\bregisterCommand\s*\(\s*['"]([^'"]+)['"]/g)].map(x=>x[1]);
@@ -186,29 +199,33 @@ try{
     for(const id of declared)if(!registered.includes(id))errors.push('Declared runtime command missing literal registerCommand handler: '+id);
   }
   if(errors.length)throw new Error(errors.join('\n'));
-  console.log('PASS: RawanIDE API 1.0 manifest checks ('+files.length+' files)');
+  console.log('PASS: RawanIDE API '+contract.apiVersion+' manifest checks'+(flags.has('--repository')?' and community repository rules':'')+' ('+files.length+' files)');
  }else if(command==='pack'){
   const folder=projectPath(args[0]),output=archivePath(args[1],folder);
-  execFileSync(process.execPath,[fileURLToPath(import.meta.url),'validate',folder,...(args.includes('--official')?['--official']:[])],{stdio:'inherit'});
-  if(output===folder||output.startsWith(folder+path.sep))throw new Error('Output archive must be outside the source directory');
-  const files=walk(folder);
-  if(files.length>contract.maxEntries)throw new Error('Too many archive entries');
-  if(files.reduce((s,f)=>s+fs.statSync(path.join(folder,f)).size,0)>contract.maxUncompressedBytes)throw new Error('Uncompressed content exceeds 300 MB');
-  // Python stdlib is used only to create a ZIP archive; no npm dependency required.
-  const py=`import zipfile,sys,os\nfolder,out=sys.argv[1:]\nwith zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:\n for root,dirs,files in os.walk(folder):\n  dirs.sort()\n  for f in sorted(files):\n   p=os.path.join(root,f)\n   z.write(p,os.path.relpath(p,folder).replace(os.sep,'/'))\n`;
+  execFileSync(process.execPath,[fileURLToPath(import.meta.url),'validate',folder,...(flags.has('--official')?['--official']:[]),...(flags.has('--repository')?['--repository']:[])],{stdio:'inherit'});
+  if(!output.endsWith('.r1'))throw new Error('Output filename must end with .r1');
+  const names=walk(folder).filter(f=>path.resolve(folder,f)!==output);
+  if(names.length>contract.maxEntries)throw new Error('Too many archive entries');
+  if(names.reduce((sum,f)=>sum+fs.statSync(path.join(folder,f)).size,0)>contract.maxUncompressedBytes)throw new Error('Uncompressed content exceeds 300 MB');
+  // Deterministic archive (sorted names, fixed timestamps): identical to what the community repository builder produces.
+  const archive=makeZip(names.map(name=>({name,data:fs.readFileSync(path.join(folder,name))})));
+  if(archive.length>contract.maxPackageBytes)throw new Error('Archive exceeds 100 MB');
   fs.mkdirSync(path.dirname(output),{recursive:true});
-  execFileSync('python3',['-c',py,folder,output]);
-  if(fs.statSync(output).size>contract.maxPackageBytes){fs.unlinkSync(output);throw new Error('Archive exceeds 100 MB')}
-  console.log('CREATED: '+output);
+  const tempOutput=output+'.tmp';
+  try{
+   fs.writeFileSync(tempOutput,archive);
+   fs.renameSync(tempOutput,output);
+  }finally{if(fs.existsSync(tempOutput))fs.unlinkSync(tempOutput)}
+  console.log('CREATED: '+output+'\nSHA-256: '+crypto.createHash('sha256').update(archive).digest('hex'));
  }else if(command==='init'){
   const kind=args[0]||'hosted-js',requested=args[1]||'rawanide-extension',dest=isBareName(requested)?path.join(projectsDir,requested):path.resolve(requested);
-  if(!['hosted-js','declarative','hosted-js-panel','hosted-js-selection-panel','hosted-js-safe-edit'].includes(kind))throw new Error('Template must be hosted-js, hosted-js-panel, hosted-js-selection-panel, hosted-js-safe-edit or declarative');
+  if(!['hosted-js','declarative','hosted-js-panel','hosted-js-selection-panel','hosted-js-safe-edit','hosted-js-project-search'].includes(kind))throw new Error('Template must be hosted-js, hosted-js-panel, hosted-js-selection-panel, hosted-js-safe-edit, hosted-js-project-search or declarative');
   if(fs.existsSync(dest))throw new Error('Destination already exists');
   fs.mkdirSync(path.dirname(dest),{recursive:true});
   fs.cpSync(path.join(here,'../templates',kind),dest,{recursive:true});
   console.log('CREATED: '+dest);
  }else{
-  console.log('RawanIDE Extension SDK 1.0.0\n  rawanide-sdk test\n  rawanide-sdk release-check\n  rawanide-sdk inspect <dir> [--official]\n  rawanide-sdk audit <dir> [--official]\n  rawanide-sdk init hosted-js|hosted-js-panel|hosted-js-selection-panel|hosted-js-safe-edit|declarative <name|dir>\n  rawanide-sdk validate <dir> [--official]\n  rawanide-sdk pack <dir> <output.r1> [--official]');
+  console.log('RawanIDE Extension SDK '+sdkVersion+'\n  rawanide-sdk test            (source checkout only)\n  rawanide-sdk release-check\n  rawanide-sdk inspect <dir> [--official] [--repository]\n  rawanide-sdk audit <dir> [--official] [--repository]\n  rawanide-sdk init hosted-js|hosted-js-panel|hosted-js-selection-panel|hosted-js-safe-edit|hosted-js-project-search|declarative <name|dir>\n  rawanide-sdk validate <dir> [--official] [--repository]\n  rawanide-sdk pack <dir> [output.r1] [--official] [--repository]\n\n  --repository  also apply the rules of community repositories (GitHub/GitLab templates)');
   if(command&&command!=='help')process.exitCode=1;
  }
 }catch(e){fail(e.message)}

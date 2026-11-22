@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "description": "Rules a community repository applies on top of the host contract. Used by `rawanide-sdk validate --repository` and by the community repository builder (tools/community-rules.json); both copies must stay identical.",
+  "allowedRuntimes": ["declarative", "hosted-js"],
+  "allowNoRuntime": true,
+  "blockedPermissions": ["TERMINAL_ACCESS", "PROCESS_EXECUTION", "DEVICE_FILES_READ", "DEVICE_FILES_WRITE"],
+  "idPattern": "^[a-z0-9][a-z0-9._-]{2,127}$",
+  "versionPattern": "^[0-9A-Za-z][0-9A-Za-z.+_-]{0,63}$",
+  "requiredLocalizedLanguages": ["en"],
+  "recommendedManifestFields": ["publisher", "description", "category"]
+}

@@ -2,215 +2,247 @@
 
 # RawanIDE Extension SDK
 
-### Build extensions. Validate with confidence. Package as `.r1`.
-
-**The official developer CLI for RawanIDE API 1.0 extensions.**
-
 <p>
 <a href="https://www.npmjs.com/package/@elhizazi1/extension-sdk"><img alt="npm version" src="https://img.shields.io/npm/v/@elhizazi1/extension-sdk?style=for-the-badge&color=19b9ad" /></a>
 <a href="https://github.com/elhizazi1/rawanide-extension-sdk/actions"><img alt="Publish workflow" src="https://img.shields.io/github/actions/workflow/status/elhizazi1/rawanide-extension-sdk/publish.yml?style=for-the-badge&label=Publish" /></a>
 <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-555?style=for-the-badge" /></a>
 </p>
 
-**[Get started](#-installation)** · **[CLI commands](#-cli-commands)** · **[Extension templates](#-extension-templates)** · **[npm package](https://www.npmjs.com/package/@elhizazi1/extension-sdk)** · **[RawanIDE for Android](https://github.com/elhizazi1/RawanIDE)** · **[Developer docs](https://rawanide.elhizazi.me/developers)**
+### ✨ Build extensions. Validate with confidence. Package as `.r1`.
+
+**Developer tools for RawanIDE Extension API 1.1 · SDK version 1.1.0**
+
+[العربية](README.ar.md) · **English**
+
+[Choose your path](#choose-your-path) · [Installation](#installation) · [Quick start](#quick-start) · [Commands](#cli-commands) · [Templates](#extension-templates) · [Publish](#publish-your-extension) · [Contributing](#contributing-and-maintenance)
 
 </div>
 
 ---
 
-## ✨ What you can build
+<a id="overview"></a>
 
-Create `.r1` extensions from ready-to-use templates, check manifests against the RawanIDE API 1.0 contract, inspect packages, and produce installable archives. The SDK is maintained separately from the Android app.
+## 🌟 Overview
 
-| Capability | Purpose |
-| :-- | :-- |
-| 🧱 Scaffold | Generate a project from one of five extension templates |
-| 🛡 Validate | Check package structure and manifests |
-| 📦 Package | Build `.r1` archives for RawanIDE |
-| 🔎 Inspect & audit | Examine extension projects and archives |
-| 🧪 Test | Run the SDK's automated checks |
+The SDK creates, validates, inspects, audits, and packages `.r1` extensions for RawanIDE. It is **not** the RawanIDE Android application, and it is **not** a GitHub/GitLab community repository template. It does not upload, register, or install anything: you build and check an extension here, then distribute it yourself (see [Publish your extension](#publish-your-extension)).
+
+- 🧱 **Create** from six ready-made templates
+- ✅ **Validate and audit** manifests and project structure
+- 📦 **Package** to `.r1` with a single command
+- 📱 **Run** the result inside RawanIDE on Android
+
+<a id="choose-your-path"></a>
+
+## 🧭 Choose your path
+
+| You are… | You want to… | Go to |
+| :-- | :-- | :-- |
+| 👤 A RawanIDE user | Install an extension | In the app: **Extensions → Repositories → Add repository**, or the **Install .r1** button for a `.r1` file. The SDK is not needed. |
+| 🧑‍💻 An extension developer | Create, test, and package an extension | [Quick start](#quick-start) |
+| 🗂️ A repository publisher | Host a catalog (website + `repository.json`) of your extensions | [Publish your extension](#publish-your-extension) → community repository |
+| 🤝 An SDK contributor or maintainer | Change, test, or release the SDK | [Contributing and maintenance](#contributing-and-maintenance) |
+
+<a id="installation"></a>
 
 ## 📦 Installation
 
-The RawanIDE Extension SDK is distributed through **npmjs** and **GitHub Packages**. Both use the same package name, `@elhizazi1/extension-sdk`. Choose one registry for installation.
+**Requirements:** Node.js 18 or newer. The main command is **`rawanide-sdk`** on Termux, Windows, macOS, and Linux. On Termux, a postinstall step configures the command launchers; it does nothing on other systems.
 
-### Option 1 — npmjs (recommended)
-
-The public npm registry requires **no GitHub token**.
+### From npm
 
 ```sh
 npm install -g @elhizazi1/extension-sdk --registry=https://registry.npmjs.org/
 rawanide-sdk help
 ```
 
-To install the SDK locally in a project:
+### From a local npm package (`.tgz`)
+
+To install from a downloaded `.tgz` (for example offline), use the file's actual path. The package file is named `elhizazi1-extension-sdk-<version>.tgz`. On Termux:
 
 ```sh
-npm install --save-dev @elhizazi1/extension-sdk --registry=https://registry.npmjs.org/
-npx rawanide-sdk help
-```
-
-To install a specific version:
-
-```sh
-npm install -g @elhizazi1/extension-sdk@1.0.0 --registry=https://registry.npmjs.org/
-```
-
-> [!TIP]
-> If you previously configured `@elhizazi1` to use GitHub Packages, switch the scope back to npmjs before installing:
->
-> ```sh
-> npm config set @elhizazi1:registry https://registry.npmjs.org/
-> ```
-
-### Option 2 — GitHub Packages (alternative)
-
-GitHub Packages requires authentication for npm package installation. Use a **GitHub personal access token (classic)** with `read:packages` permission, and ensure your account has access to the package.
-
-Configure the scoped registry in your local `~/.npmrc`:
-
-```ini
-@elhizazi1:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
-
-Set the `GITHUB_TOKEN` environment variable locally to your own token, then install:
-
-```sh
-npm install -g @elhizazi1/extension-sdk
+npm install -g /sdcard/Download/elhizazi1-extension-sdk-<version>.tgz
 rawanide-sdk help
 ```
 
-For a project-local installation:
+On Windows, macOS, or Linux:
 
 ```sh
-npm install --save-dev @elhizazi1/extension-sdk
-npx rawanide-sdk help
+npm install -g ./elhizazi1-extension-sdk-<version>.tgz
+rawanide-sdk help
 ```
 
-> [!IMPORTANT]
-> `${GITHUB_TOKEN}` is an environment-variable reference, **not an actual token**. Never commit real credentials to the repository or include them in issue reports. Do not commit a project `.npmrc` containing a token.
+For a project-local install from npm, use `npm install --save-dev @elhizazi1/extension-sdk`, then `npx rawanide-sdk help`.
 
-### Switching between registries
-
-The `@elhizazi1` scope can point to only one default registry at a time in your npm configuration. Check its current setting:
+### From a source checkout
 
 ```sh
-npm config get @elhizazi1:registry
+node bin/rawanide-sdk.mjs help
 ```
 
-Use npmjs (recommended):
-
-```sh
-npm config set @elhizazi1:registry https://registry.npmjs.org/
-```
-
-Or use GitHub Packages (with authentication configured as above):
-
-```sh
-npm config set @elhizazi1:registry https://npm.pkg.github.com/
-```
-
-The compatibility command is also available after installation:
-
-```sh
-rawanide --help
-```
+<a id="quick-start"></a>
 
 ## ⚡ Quick start
 
 ```sh
 rawanide-sdk init hosted-js-panel my-panel
 rawanide-sdk validate my-panel
+rawanide-sdk audit my-panel
 rawanide-sdk pack my-panel my-panel.r1
 ```
 
-Named projects are created in `workspace/projects/`, and named packages are written to `workspace/dist/` relative to the **current working directory**. Explicit paths are also supported:
+Where things go (relative to the directory you run the command from):
 
-```sh
-rawanide-sdk init hosted-js-panel "$HOME/my-panel"
-rawanide-sdk pack "$HOME/my-panel" "$HOME/my-panel.r1"
-```
+| Command | Result |
+| :-- | :-- |
+| `init <template> <name>` | A bare name creates `./workspace/projects/<name>/`. A path such as `./name` or `/abs/path` is used as given. |
+| `validate`, `audit`, `inspect`, `pack <project>` | `<project>` is an existing path (checked first) or the bare name of a project in `workspace/projects/`. With no argument, the current directory is used. |
+| `pack <project>` | Writes `<project-name>.r1` **inside the project folder**. |
+| `pack <project> <file.r1>` | Writes `<file.r1>` relative to the current directory. It is **not** placed in `workspace/dist/`. |
 
-The resulting `.r1` archive can be installed in a compatible RawanIDE application.
+`pack` validates first, then writes a deterministic archive (sorted entries, fixed timestamps, SHA-256 printed) of every file in the project folder except `.git`, `.hg`, `.svn`, `node_modules`, `.DS_Store`, `*.r1`, and `*.tmp`. That includes the template's `README` and `LICENSE`, so replace them with your own before packing. The output name must end in `.r1`, and symbolic links are rejected. `workspace/` is excluded from Git and from the npm package.
+
+> 💡 **Tip:** from inside a project folder you can simply run `rawanide-sdk validate .` and `rawanide-sdk pack . my-panel.r1`.
+
+Then test the `.r1` in the app: **Install .r1**, enable the extension, open a project, and run its command or action. A successful `pack` does not prove the extension runs on Android.
+
+<a id="cli-commands"></a>
 
 ## 🧰 CLI commands
 
-| Command | What it does |
+| Command | Purpose |
 | :-- | :-- |
-| `rawanide-sdk help` | Show CLI usage |
-| `rawanide-sdk test` | Run SDK tests |
-| `rawanide-sdk init <template> <name>` | Create an extension project |
-| `rawanide-sdk validate <project>` | Validate an extension |
-| `rawanide-sdk pack <project> <output.r1>` | Package an extension |
-| `rawanide-sdk inspect <project>` | Inspect extension information |
-| `rawanide-sdk audit <project>` | Audit an extension |
-| `rawanide-sdk release-check` | Check SDK release readiness |
+| `rawanide-sdk help` | Show usage |
+| `rawanide-sdk init <template> <name>` | Create an extension project from a template |
+| `rawanide-sdk validate <project> [--official] [--repository]` | Validate the manifest and structure |
+| `rawanide-sdk audit <project> [--official] [--repository]` | Validate and add static checks and warnings (JSON report) |
+| `rawanide-sdk inspect <project> [--official] [--repository]` | Print extension information (JSON report) |
+| `rawanide-sdk pack <project> [output.r1] [--official] [--repository]` | Validate, then create a `.r1` archive |
+| `rawanide-sdk test` | Run the SDK's own tests. **Source checkout only**; the `tests/` folder is not in the npm package. |
+| `rawanide-sdk release-check` | Check SDK release readiness (maintainers) |
 
-Run the CLI from the source checkout without global installation:
+Commands exit with a non-zero status on failure, so they can run in CI. `--official` treats the extension as coming from an official source, which allows the `PROJECT_ACCESS` permission; community extensions should not use it. `--repository` also applies the community repository rules (see [Publish your extension](#publish-your-extension)). The older `rawanide` and `rawanide-sdk-desktop` names remain as compatibility aliases; use **`rawanide-sdk`** in new instructions.
 
-```sh
-node bin/rawanide-sdk.mjs test
-node bin/rawanide-sdk.mjs init hosted-js-panel my-panel
-node bin/rawanide-sdk.mjs validate my-panel
-node bin/rawanide-sdk.mjs pack my-panel my-panel.r1
-```
-
-The legacy `rawanide` command and `npm test` remain available for compatibility; **`rawanide-sdk` is the official CLI**.
+<a id="extension-templates"></a>
 
 ## 🧩 Extension templates
 
-| Template | Starting point |
-| :-- | :-- |
-| `declarative` | Manifest-based extension |
-| `hosted-js` | Hosted JavaScript entry point |
-| `hosted-js-panel` | Extension with a panel |
-| `hosted-js-selection-panel` | Selection-oriented panel and context action |
-| `hosted-js-safe-edit` | Selection-oriented safe editing workflow |
+| Template | What it demonstrates | Permissions |
+| :-- | :-- | :-- |
+| `declarative` | A minimal declarative manifest; add the contributions you need | none |
+| `hosted-js` | A command registered by JavaScript (shows a toast) | `UI_ACCESS` |
+| `hosted-js-panel` | A command that opens an HTML panel | `UI_ACCESS` |
+| `hosted-js-selection-panel` | A context action on selected text that opens a read-only panel | `EDITOR_READ`, `UI_ACCESS` |
+| `hosted-js-safe-edit` | Replacing selected text only after explicit confirmation | `EDITOR_READ`, `EDITOR_WRITE`, `UI_ACCESS` |
+| `hosted-js-project-search` | Read-only project-wide file/text search using API 1.1 | `FILE_READ`, `UI_ACCESS` |
 
-Each template includes a manifest, icon, README, and license template. Context-action templates include a **separate action icon**.
+Each template contains `manifest.json`, `assets/icon.svg`, a `README` (English and Arabic), and a sample MIT `LICENSE` with `[YEAR]` and `[COPYRIGHT HOLDER]` placeholders. The two selection templates also contain `assets/context-action.svg`, a separate icon for the editor context action. Extension IDs such as `local.sdk-panel` are placeholders: choose a unique ID, review the permissions, and replace the placeholder icons and license text before publishing.
 
-## ⚙️ Requirements & compatibility
+<a id="publish-your-extension"></a>
 
-- **Node.js 18+** for SDK tooling.
-- **Python 3** for creating `.r1` archives.
-- On Android shared storage, global npm installation can avoid local symlink limitations.
-- SDK validation covers package structure and manifests; runtime behavior depends on the installed RawanIDE app.
+## 🚀 Publish your extension
 
-## 🚀 Publishing & releases
+The SDK never uploads anything. There are two ways to distribute what you build.
 
-The SDK is available through **npmjs** (recommended for developers) and **GitHub Packages** (an additional distribution channel).
+**1. Share the `.r1` file directly.** Users install it with **Install .r1** in the app.
 
-The existing GitHub Actions workflow at `.github/workflows/publish.yml` publishes to **GitHub Packages** when a matching version tag is pushed. The workflow checks the version, runs SDK tests, and performs a release check before publishing. It does **not** automatically publish to npmjs.
+**2. Publish through a community repository (GitHub or GitLab).** Use the GitHub or GitLab community repository template; both are separate projects from this SDK. Key points:
 
-For maintainers, after updating the version, running checks, and reviewing the package contents, publish a new version to npmjs with:
+- Check the rules first: `rawanide-sdk validate . --repository` applies the same rules the repository builder enforces. The SDK templates already satisfy them.
+  - `localizedMetadata.en` in the manifest (`localizedMetadata.ar` is used by the Arabic pages) and an existing `icon` file.
+  - Runtime `declarative` or `hosted-js` (or none). A plain `validate` also accepts `preview-js`, but community repositories do not.
+  - None of `TERMINAL_ACCESS`, `PROCESS_EXECUTION`, `DEVICE_FILES_READ`, `DEVICE_FILES_WRITE`.
+  - A new `version` for every release: a published `.r1` is never rewritten.
+- Put the extension's **source folder** in the repository's `extension-src/<name>/`. You do not need to add a `.r1`: the repository builder packs the folder itself, with the same packer as `rawanide-sdk pack` (same files, order, and timestamps), and records its SHA-256.
+- Fill in `publisher`, `description`, and `category`: they are shown in the catalog (`rawanide-sdk audit . --repository` reminds you).
+- If you write a manifest from scratch, add the localized metadata:
+
+  ```json
+  "localizedMetadata": {
+    "en": { "name": "My Extension", "description": "What it does." },
+    "ar": { "name": "إضافتي", "description": "ماذا تفعل." }
+  }
+  ```
+
+- List the extension in the repository's `repo.config.json` (`src`, `releaseDate`, `changelog.en`, `tags`), then run `node tools/build.mjs`. To run `rawanide-sdk validate` on every extension first, install the SDK and use `RAWANIDE_SDK_VALIDATE=1 node tools/build.mjs` (POSIX shells, including Termux).
+
+The repository templates' own README files describe the full steps.
+
+<a id="quality-and-security"></a>
+
+## 🛡️ Quality and security
+
+| Check | What it establishes | What it does not establish |
+| :-- | :-- | :-- |
+| `validate` | Supported manifest and structure rules pass | Runtime behavior is correct, or a repository will accept the extension |
+| `audit` | The SDK's audit rules report no blocking findings | A complete independent security review |
+| `pack` | A `.r1` archive can be produced | Marketplace acceptance or Android compatibility |
+
+Treat host APIs, permissions, and user data access as security-sensitive, and request only the permissions you need.
+
+<a id="compatibility-and-limitations"></a>
+
+## ⚙️ Compatibility and limitations
+
+- SDK `1.1.0` is aligned with host API `1.1`. Existing API `1.0` extensions remain compatible; old templates keep their lowest required API `1.0`, and the new project-search template declares `1.1`.
+- The TypeScript declarations (`@elhizazi1/extension-sdk/types`) cover a reviewed subset of the host API, not all of it; see [`docs/type-contract-0.11.md`](docs/type-contract-0.11.md). The host contract limits (`@elhizazi1/extension-sdk/contract`) are summarized in [`docs/compatibility.md`](docs/compatibility.md).
+- Validation, audit, and packaging are static and conservative. They do not execute JavaScript or emulate Android. Test every extension in the RawanIDE app.
+- Do not reuse published repository IDs or verification tokens, and do not modify the bytes of a published `.r1`.
+
+<a id="contributing-and-maintenance"></a>
+
+## 🤝 Contributing and maintenance
+
+For people changing or releasing the SDK itself.
+
+**Run the checks** from a source checkout:
 
 ```sh
-npm publish --access public --registry=https://registry.npmjs.org/
+npm test                    # all SDK tests (node --test tests/*.test.mjs)
+npm run check:release       # release-check on all templates
+npm run check:types         # typing contract tests
+npm run check:types:compile # needs the TypeScript compiler (tsc)
+npm run check:archives      # needs python3
+npm run check:package       # npm pack --dry-run
 ```
 
-Publishing requires an authorized npm account and the registry's applicable authentication requirements. Every published version is immutable: use a new version for each update (for example, `1.0.1` for a patch or `1.1.0` for a backward-compatible feature). A local ZIP is not a published npm package.
+**Shared with the repository templates.** `lib/zip.mjs` (the packer) and `community-rules.json` are copied byte for byte into the community repository templates (`tools/lib/zip.mjs`, `tools/community-rules.json`). Change them here first, then update the templates; `tests/repository-rules.test.mjs` guards the packer's fingerprint.
 
-## 🔗 Related projects & resources
+**Documentation.** [`docs/README.md`](docs/README.md) is the index. Files with a version number in their name or title are historical engineering notes.
+
+**Reporting problems.** Include the SDK version, platform, CLI command, and the error output with sensitive data removed.
+
+<a id="resources"></a>
+
+## 🔗 Resources
 
 | Resource | Link |
 | :-- | :-- |
-| 📱 RawanIDE Android app | [elhizazi1/RawanIDE](https://github.com/elhizazi1/RawanIDE) |
-| 📖 Developer documentation | [rawanide.elhizazi.me/developers](https://rawanide.elhizazi.me/developers) |
-| 📦 Official npm package | [@elhizazi1/extension-sdk](https://www.npmjs.com/package/@elhizazi1/extension-sdk) |
-| 🐙 GitHub Packages | [GitHub package registry](https://github.com/elhizazi1/rawanide-extension-sdk/packages) |
-| 📚 Additional SDK notes | [`docs/`](docs/) |
+| RawanIDE Android app | [RawanIDE](https://github.com/elhizazi1/RawanIDE) |
+| SDK source | [rawanide-extension-sdk](https://github.com/elhizazi1/rawanide-extension-sdk) |
+| npm package | [@elhizazi1/extension-sdk](https://www.npmjs.com/package/@elhizazi1/extension-sdk) |
+| Developer documentation | [RawanIDE Developers](https://rawanide.elhizazi.me/developers) |
+| SDK documentation index | [`docs/README.md`](docs/README.md) |
 
-## ⚖️ License
+<a id="license"></a>
 
-The SDK is MIT licensed; see [`LICENSE`](LICENSE). Templates include license files intended to be reviewed and customized by extension authors before redistribution.
+## 📄 License
+
+The SDK uses the MIT license; see [LICENSE](LICENSE). The license files inside extension templates are examples that their authors must review and customize.
 
 ---
 
 <div align="center">
 
-**Made for the RawanIDE developer community.**
+💚 **Made for the RawanIDE developer community.**
 
 <sub>RawanIDE · Code. Build. Preview. Anywhere.</sub>
 
 </div>
+
+## Programmatic project search — API 1.1
+
+New `workspace.findFiles` and `workspace.findText` search saved files, including closed files, without using the manual search UI or writing to the project. Both require `FILE_READ`, return Promises with explicit limits/cancellation, and run native filesystem work off the UI thread. See [search contract](docs/workspace-search-1.1.md) and [Arabic documentation](docs/workspace-search-1.1.ar.md).
+
+```sh
+rawanide-sdk init hosted-js-project-search my-project-search
+```

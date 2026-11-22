@@ -5,7 +5,10 @@ import path from 'node:path';
 import fs from 'node:fs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const [,,command,...args]=process.argv;
-if(command==='test'){
+if(command==='test'&&!fs.existsSync(path.join(root,'tests'))){
+  console.error('The SDK test suite is only available in a source checkout (the tests/ folder is not part of the npm package).');
+  process.exitCode=1;
+}else if(command==='test'){
   const result=spawnSync(process.execPath,['--test',...requireTests()],{cwd:root,stdio:'inherit'});
   if(result.error){console.error(result.error.message);process.exitCode=1}
   else process.exitCode=result.status??1;
