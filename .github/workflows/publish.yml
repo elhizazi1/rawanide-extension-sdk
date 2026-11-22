@@ -29,6 +29,8 @@ jobs:
       - name: Check release
         run: node bin/rawanide-sdk.mjs release-check
       - name: Publish to GitHub Packages
-        run: npm publish
+        run: |
+          npm pkg set publishConfig.registry=https://npm.pkg.github.com
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
