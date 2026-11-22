@@ -3,16 +3,16 @@
 # RawanIDE Extension SDK
 
 <p>
-<a href="https://www.npmjs.com/package/@elhizazi1/extension-sdk"><img alt="npm version" src="https://img.shields.io/npm/v/@elhizazi1/extension-sdk?style=for-the-badge&color=19b9ad" /></a>
+<a href="https://github.com/elhizazi1/rawanide-extension-sdk/pkgs/npm/extension-sdk"><img alt="GitHub Packages distribution: SDK 1.1.0" src="https://img.shields.io/badge/GitHub%20Packages-SDK%201.1.0-19b9ad?style=for-the-badge" /></a>
 <a href="https://github.com/elhizazi1/rawanide-extension-sdk/actions"><img alt="Publish workflow" src="https://img.shields.io/github/actions/workflow/status/elhizazi1/rawanide-extension-sdk/publish.yml?style=for-the-badge&label=Publish" /></a>
-<a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-555?style=for-the-badge" /></a>
+<a href="https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-555?style=for-the-badge" /></a>
 </p>
 
 ### ✨ أنشئ الإضافات، وتحقق من سلامتها، وحوّلها إلى حزم `.r1`.
 
 **أدوات المطورين لواجهة إضافات RawanIDE API 1.1 · إصدار SDK 1.1.0**
 
-**العربية** · [English](README.md)
+**العربية** · [English](https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/README.md)
 
 [اختر مسارك](#اختر-مسارك) · [التثبيت](#التثبيت) · [بداية سريعة](#بداية-سريعة) · [الأوامر](#أوامر-سطر-الأوامر) · [القوالب](#قوالب-الإضافات) · [النشر](#انشر-إضافتك) · [المساهمة](#المساهمة-والصيانة)
 
@@ -48,14 +48,33 @@
 
 **المتطلبات:** Node.js 18 أو أحدث. الأمر الموحد هو **`rawanide-sdk`** على Termux وWindows وmacOS وLinux. على Termux تضبط خطوة ما بعد التثبيت مشغّلات الأوامر، ولا تفعل شيئًا على الأنظمة الأخرى.
 
-### من npm
+### من GitHub Packages
+
+هذه **نسخة السورس وGitHub Packages** من SDK **1.1.0**. اسم الحزمة `@elhizazi1/extension-sdk` وسجلها `https://npm.pkg.github.com`. تُنشر نسخة npmjs بصورة مستقلة؛ شارة إصدار npmjs ليست مؤشرًا لإصدار GitHub Packages.
+
+يتطلب GitHub المصادقة حتى لحزم npm العامة. أنشئ رمز وصول شخصيًا في GitHub من نوع **classic** بصلاحية `read:packages` مع السماح بالوصول إلى هذه الحزمة، ثم سجّل الدخول في طرفيتك:
 
 ```sh
-npm install -g @elhizazi1/extension-sdk --registry=https://registry.npmjs.org/
+npm login --scope=@elhizazi1 --auth-type=legacy --registry=https://npm.pkg.github.com
+```
+
+أدخل اسم حساب GitHub، وعند طلب كلمة المرور أدخل رمز الوصول، **وليس كلمة مرور حساب GitHub**. لا تضع الرمز في السورس أو commits أو البلاغات أو رسائل المحادثة. ربط النطاق الناتج عن تسجيل الدخول يخص حزم `@elhizazi1`؛ ولا يجعل مصادقة GitHub مصادقةً في npmjs.
+
+```sh
+npm install -g @elhizazi1/extension-sdk@1.1.0 --registry=https://npm.pkg.github.com
 rawanide-sdk help
 ```
 
-### من حزمة npm محلية (`.tgz`)
+للتثبيت داخل مشروع بعد المصادقة:
+
+```sh
+npm install --save-dev @elhizazi1/extension-sdk@1.1.0 --registry=https://npm.pkg.github.com
+npx rawanide-sdk help
+```
+
+يستخدم التثبيت أداة `npm`، لكن التنزيل من **GitHub Packages**. راجع [تعليمات المصادقة الرسمية](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry). لنسخة npmjs المنشورة بصورة مستقلة، اتبع توثيق صفحتها وإعداد سجلها الخاص.
+
+### من أرشيف حزمة محلي (`.tgz`)
 
 للتثبيت من ملف `.tgz` منزَّل (مثلًا دون اتصال)، استخدم مساره الفعلي. اسم ملف الحزمة `elhizazi1-extension-sdk-<version>.tgz`. على Termux:
 
@@ -71,13 +90,17 @@ npm install -g ./elhizazi1-extension-sdk-<version>.tgz
 rawanide-sdk help
 ```
 
-للتثبيت داخل مشروع من npm، استخدم `npm install --save-dev @elhizazi1/extension-sdk` ثم `npx rawanide-sdk help`.
-
 ### من المشروع المصدري
 
+انسخ أو نزّل سورس SDK وشغّل المشغّل من جذر المشروع. لا يحتاج هذا المسار إلى تثبيت عالمي من أي سجل حزم.
+
 ```sh
+git clone https://github.com/elhizazi1/rawanide-extension-sdk.git
+cd rawanide-extension-sdk
 node bin/rawanide-sdk.mjs help
 ```
+
+عند العمل من السورس استخدم `node bin/rawanide-sdk.mjs <command>` بدل `rawanide-sdk <command>` العالمي في الأمثلة التالية.
 
 <a id="بداية-سريعة"></a>
 
@@ -179,12 +202,20 @@ rawanide-sdk pack my-panel my-panel.r1
 
 تعامل بحذر مع واجهات المضيف والصلاحيات وبيانات المستخدم، ولا تطلب إلا الصلاحيات التي تحتاجها.
 
+## البحث البرمجي في المشروع — API 1.1
+
+الدالتان الجديدتان `workspace.findFiles` و`workspace.findText` تبحثان في الملفات المحفوظة، بما فيها المغلقة، دون استخدام واجهة البحث اليدوية أو الكتابة في المشروع. تتطلبان `FILE_READ` وتعيدان Promise بنتائج ذات حدود وإلغاء صريح. راجع [توثيق البحث العربي](https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/docs/workspace-search-1.1.ar.md) و[الإنجليزي](https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/docs/workspace-search-1.1.md).
+
+```sh
+rawanide-sdk init hosted-js-project-search my-project-search
+```
+
 <a id="التوافق-والحدود"></a>
 
 ## ⚙️ التوافق والحدود
 
 - SDK ‏`1.1.0` متزامن مع API ‏`1.1`. تبقى إضافات `1.0` متوافقة؛ القوالب السابقة تحافظ على أقل API تحتاجه (`1.0`)، وقالب بحث المشروع الجديد يعلن `1.1`.
-- تغطي تعريفات TypeScript (`@elhizazi1/extension-sdk/types`) مجموعة جزئية مراجَعة من واجهة المضيف لا كلها؛ راجع [`docs/type-contract-0.11.md`](docs/type-contract-0.11.md). وحدود عقد المضيف (`@elhizazi1/extension-sdk/contract`) ملخصة في [`docs/compatibility.md`](docs/compatibility.md).
+- تغطي تعريفات TypeScript (`@elhizazi1/extension-sdk/types`) مجموعة جزئية مراجَعة من واجهة المضيف لا كلها؛ راجع [`docs/type-contract-0.11.md`](https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/docs/type-contract-0.11.md). وحدود عقد المضيف (`@elhizazi1/extension-sdk/contract`) ملخصة في [`docs/compatibility.md`](https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/docs/compatibility.md).
 - التحقق والتدقيق والتغليف فحوص ثابتة ومتحفظة؛ فهي لا تنفّذ JavaScript ولا تحاكي Android. اختبر كل إضافة داخل تطبيق RawanIDE.
 - لا تُعِد استخدام معرّفات المستودعات المنشورة أو رموز التوثيق، ولا تغيّر بايتات حزم `.r1` المنشورة.
 
@@ -192,7 +223,7 @@ rawanide-sdk pack my-panel my-panel.r1
 
 ## 🤝 المساهمة والصيانة
 
-لمن يعدّل SDK نفسه أو يصدره.
+لمن يعدّل SDK نفسه. يستخدم نشر GitHub Packages سير العمل المخصص لجيتهب فقط؛ راجع [دليل النشر للمشرف](https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/docs/GITHUB_DISTRIBUTION.md).
 
 **شغّل الفحوص** من المشروع المصدري:
 
@@ -207,7 +238,7 @@ npm run check:package       # npm pack --dry-run
 
 **مشترك مع قوالب المستودعات.** الملفان `lib/zip.mjs` (المغلِّف) و`community-rules.json` يُنسخان بايتًا ببايت إلى قوالب مستودعات المجتمع (`tools/lib/zip.mjs` و`tools/community-rules.json`). عدّلهما هنا أولًا ثم حدّث القوالب؛ ويحرس الاختبار `tests/repository-rules.test.mjs` بصمة المغلِّف.
 
-**التوثيق.** الفهرس هو [`docs/README.md`](docs/README.md). الملفات التي يحمل اسمها أو عنوانها رقم إصدار هي ملاحظات هندسية تاريخية.
+**التوثيق.** الفهرس هو [`docs/README.md`](https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/docs/README.md). الملاحظات التاريخية موجودة في `docs/history/`؛ أما الملفات المرقمة والمدرجة في فهرس المراجع الحالية، ومنها بحث المشروع 1.1، فتبقى توثيقًا حاليًا.
 
 **الإبلاغ عن المشكلات.** أرفق إصدار SDK والمنصة والأمر المستخدم ومخرجات الخطأ بعد إزالة البيانات الحساسة.
 
@@ -218,16 +249,17 @@ npm run check:package       # npm pack --dry-run
 | المورد | الرابط |
 | :-- | :-- |
 | تطبيق RawanIDE لنظام Android | [RawanIDE](https://github.com/elhizazi1/RawanIDE) |
+| GitHub Packages | [extension-sdk](https://github.com/elhizazi1/rawanide-extension-sdk/pkgs/npm/extension-sdk) |
 | مشروع SDK المصدري | [rawanide-extension-sdk](https://github.com/elhizazi1/rawanide-extension-sdk) |
-| حزمة npm | [@elhizazi1/extension-sdk](https://www.npmjs.com/package/@elhizazi1/extension-sdk) |
+| نسخة npmjs المستقلة | [@elhizazi1/extension-sdk](https://www.npmjs.com/package/@elhizazi1/extension-sdk) |
 | وثائق المطورين | [RawanIDE Developers](https://rawanide.elhizazi.me/developers) |
-| فهرس وثائق SDK | [`docs/README.md`](docs/README.md) |
+| فهرس وثائق SDK | [`docs/README.md`](https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/docs/README.md) |
 
 <a id="الترخيص"></a>
 
 ## 📄 الترخيص
 
-يستخدم SDK ترخيص MIT؛ راجع [LICENSE](LICENSE). التراخيص داخل قوالب الإضافات أمثلة يجب على أصحاب الإضافات مراجعتها وتخصيصها.
+يستخدم SDK ترخيص MIT؛ راجع [LICENSE](https://github.com/elhizazi1/rawanide-extension-sdk/blob/main/LICENSE). التراخيص داخل قوالب الإضافات أمثلة يجب على أصحاب الإضافات مراجعتها وتخصيصها.
 
 ---
 
@@ -238,11 +270,3 @@ npm run check:package       # npm pack --dry-run
 <sub>RawanIDE · Code. Build. Preview. Anywhere.</sub>
 
 </div>
-
-## البحث البرمجي في المشروع — API 1.1
-
-الدالتان الجديدتان `workspace.findFiles` و`workspace.findText` تبحثان في الملفات المحفوظة، بما فيها المغلقة، دون استخدام واجهة البحث اليدوية أو الكتابة في المشروع. تتطلبان `FILE_READ` وتعيدان Promise بنتائج ذات حدود وإلغاء صريح. راجع [توثيق البحث العربي](docs/workspace-search-1.1.ar.md) و[الإنجليزي](docs/workspace-search-1.1.md).
-
-```sh
-rawanide-sdk init hosted-js-project-search my-project-search
-```

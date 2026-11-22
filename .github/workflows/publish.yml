@@ -3,9 +3,19 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish to GitHub Packages after checks (false = dry run only)'
+        type: boolean
+        required: true
+        default: false
 permissions:
   contents: read
   packages: write
+concurrency:
+  group: sdk-github-packages-publish
+  cancel-in-progress: false
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -16,21 +26,31 @@ jobs:
           node-version: '22'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@elhizazi1'
-      - name: Verify tag matches package version
+      - name: Verify GitHub distribution and tag
         shell: bash
         run: |
-          VERSION=$(node -p "require('./package.json').version")
-          if [[ "${GITHUB_REF_TYPE}" == "tag" && "${GITHUB_REF_NAME}" != "v${VERSION}" ]]; then
-            echo "Tag and package version mismatch" >&2
-            exit 1
-          fi
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          if (pkg.publishConfig?.registry?.replace(/\/$/, '') !== 'https://npm.pkg.github.com') {
+            throw new Error('This workflow publishes only the GitHub Packages distribution.');
+          }
+          if (pkg.name !== '@elhizazi1/extension-sdk') throw new Error('Unexpected package name.');
+          if (process.env.GITHUB_REF_TYPE === 'tag' && process.env.GITHUB_REF_NAME !== `v${pkg.version}`) {
+            throw new Error('Tag and package version mismatch.');
+          }
+          JS
       - name: Run SDK tests
         run: node bin/rawanide-sdk.mjs test
       - name: Check release
         run: node bin/rawanide-sdk.mjs release-check
+      - name: Preview GitHub package without publishing
+        if: github.event_name == 'workflow_dispatch' && !inputs.publish
+        run: npm publish --dry-run --registry=https://npm.pkg.github.com
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to GitHub Packages
-        run: |
-          npm pkg set publishConfig.registry=https://npm.pkg.github.com
-          npm publish
+        if: github.event_name == 'push' || inputs.publish
+        run: npm publish --registry=https://npm.pkg.github.com
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

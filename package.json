@@ -49,7 +49,7 @@
     "url": "https://github.com/elhizazi1/rawanide-extension-sdk/issues"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
+    "registry": "https://npm.pkg.github.com",
     "access": "public"
   }
 }
